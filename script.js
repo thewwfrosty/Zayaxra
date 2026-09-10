@@ -1,14 +1,13 @@
 /* =========================================================
-   ZAYAXRA — SCRIPT.JS
-   FULL PET DATABASE + REAL IMAGES
-   PREMIUM TRADE + PROFILE + WFL
+   ZAYAXRA
+   COMPLETE SCRIPT
 ========================================================= */
 
 "use strict";
 
 
 /* =========================================================
-   DATABASE SOURCES
+   DATA
 ========================================================= */
 
 const PET_DATA_URL =
@@ -17,10 +16,6 @@ const PET_DATA_URL =
 const PET_IMAGE_BASE =
   "https://raw.githubusercontent.com/ironbabatekkral/adoptme-values/main";
 
-
-/* =========================================================
-   ZAYAXRA CUSTOM VALUES
-========================================================= */
 
 const CUSTOM_VALUE_OVERRIDES = {
 
@@ -32,1068 +27,503 @@ const CUSTOM_VALUE_OVERRIDES = {
   "Parrot": 38,
   "Evil Unicorn": 32,
   "Crow": 28,
-  "Frost Fury": 16,
-  "Arctic Reindeer": 15,
-  "Diamond Butterfly": 14,
   "Turtle": 12,
-  "Kangaroo": 11,
-  "Albino Monkey": 10,
-  "Hedgehog": 9,
-  "Lion": 9,
-  "Flamingo": 8,
-  "Dalmatian": 8,
-  "Crocodile": 7,
-  "Elephant": 7,
-  "Cow": 7,
-  "Brown Bear": 6,
-  "Pink Cat": 6,
-  "Blue Dog": 6,
-  "Meerkat": 5,
-  "Rhino": 5,
-  "Hyena": 5,
-  "Black Panther": 5,
-  "Platypus": 4.5,
-  "Goat": 4.5,
-  "Swan": 4,
-  "Ancient Dragon": 4,
-  "Unicorn": 3.5,
-  "Dragon": 3,
-  "Golden Dragon": 3,
-  "Golden Unicorn": 3,
-  "Golden Penguin": 2.8,
-  "King Bee": 2.5,
-  "Queen Bee": 3,
-  "Kitsune": 2.5,
-  "Octopus": 2.5,
-  "Shark": 2.5,
-  "Dodo": 2.5,
-  "T-Rex": 2.5,
-  "Skele-Rex": 3,
-  "Lavender Dragon": 2.5,
-  "Lava Dragon": 3,
-  "Phoenix": 2,
-  "Golden Rat": 2,
-  "Metal Ox": 1.5,
-  "Snow Owl": 2,
-  "Goldhorn": 1.8,
-  "Griffin": 1.2,
-  "Albino Bat": 3,
-  "Business Monkey": 2,
-  "Ghost Bunny": 2,
-  "Ginger Cat": 1.2,
-  "Panda": 1.2,
-  "Red Panda": 1,
-  "Bee": 1,
-  "Penguin": 1,
-  "Toucan": 1,
-  "Starfish": 1,
-  "Koala": 1.5,
-  "Frog": 1,
-  "Sloth": 0.8,
-  "Polar Bear": 3.5,
-  "Reindeer": 3,
-  "Rabbit": 0.7,
-  "Monkey": 0.7,
-  "Bunny": 0.7,
-  "Emu": 0.8,
-  "Beaver": 0.6,
-  "Musk Ox": 0.7,
-  "Woolly Mammoth": 0.8,
-  "Dilophosaurus": 0.7,
-  "Stegosaurus": 0.7,
-  "Triceratops": 0.6,
-  "Shrew": 3,
-  "Megalodon": 1,
-  "Bat": 0.5,
-  "Snow Cat": 0.3,
-  "Fennec Fox": 0.3,
-  "Red Fox": 0.4,
-  "Shiba Inu": 0.3,
-  "Dingo": 0.3,
-  "Snow Puma": 0.3,
-  "Puma": 0.2,
-  "Cat": 0.1,
-  "Dog": 0.1,
-  "Mouse": 0.1,
-  "Chick": 0.15,
-  "Robin": 0.2,
-  "Chicken": 0.3,
-  "Bandicoot": 0.2,
-  "Ground Sloth": 0.2,
-  "Wolpertinger": 0.2,
-  "Otter": 0.2,
-  "Buffalo": 0.15,
   "Cracked Egg": 0.1
 
 };
 
 
-/* =========================================================
-   DATABASE STATE
-========================================================= */
+const FALLBACK_ITEMS = [
 
-let PET_DATABASE = [];
+  {
+    id: "shadow_dragon",
+    name: "Shadow Dragon",
+    type: "pet",
+    rarity: "legendary",
+    value: 125,
+    image: "https://cdn.playadopt.me/items/shadow_dragon.png"
+  },
 
-let databaseReady = false;
+  {
+    id: "bat_dragon",
+    name: "Bat Dragon",
+    type: "pet",
+    rarity: "legendary",
+    value: 110,
+    image: "https://cdn.playadopt.me/items/bat_dragon.png"
+  },
+
+  {
+    id: "giraffe",
+    name: "Giraffe",
+    type: "pet",
+    rarity: "legendary",
+    value: 70,
+    image: "https://cdn.playadopt.me/items/giraffe.png"
+  },
+
+  {
+    id: "frost_dragon",
+    name: "Frost Dragon",
+    type: "pet",
+    rarity: "legendary",
+    value: 58,
+    image: "https://cdn.playadopt.me/items/frost_dragon.png"
+  },
+
+  {
+    id: "owl",
+    name: "Owl",
+    type: "pet",
+    rarity: "legendary",
+    value: 42,
+    image: "https://cdn.playadopt.me/items/owl.png"
+  },
+
+  {
+    id: "parrot",
+    name: "Parrot",
+    type: "pet",
+    rarity: "legendary",
+    value: 38,
+    image: "https://cdn.playadopt.me/items/parrot.png"
+  },
+
+  {
+    id: "evil_unicorn",
+    name: "Evil Unicorn",
+    type: "pet",
+    rarity: "legendary",
+    value: 32,
+    image: "https://cdn.playadopt.me/items/evil_unicorn.png"
+  },
+
+  {
+    id: "crow",
+    name: "Crow",
+    type: "pet",
+    rarity: "legendary",
+    value: 28,
+    image: "https://cdn.playadopt.me/items/crow.png"
+  },
+
+  {
+    id: "turtle",
+    name: "Turtle",
+    type: "pet",
+    rarity: "legendary",
+    value: 12,
+    image: "https://cdn.playadopt.me/items/turtle.png"
+  },
+
+  {
+    id: "cracked_egg",
+    name: "Cracked Egg",
+    type: "egg",
+    rarity: "common",
+    value: .1,
+    image: "https://cdn.playadopt.me/items/cracked_egg.png"
+  }
+
+];
 
 
-/* =========================================================
-   GLOBAL STATE
-========================================================= */
+let allItems = [];
+let filteredValues = [];
+
+let valueCategory = "all";
+let pickerCategory = "all";
+
+let visibleValueCount = 60;
 
 let youTrade = [];
-
 let themTrade = [];
 
 let pickerSide = null;
-
-let selectedPet = null;
+let selectedItem = null;
 
 let selectedForm = "normal";
-
 let selectedPotion = {
   fly: false,
   ride: false
 };
 
-let recordedTradeKey = "";
+let currentAvatar = "🐉";
 
-let selectedAvatar = "🐉";
-
-
-/* =========================================================
-   BASIC HELPER
-========================================================= */
-
-function $(id) {
-  return document.getElementById(id);
-}
+let tradeSessionRecorded = false;
 
 
 /* =========================================================
-   SLUG
+   HELPERS
 ========================================================= */
 
-function slug(name) {
-
-  const special = {
-
-    "T-Rex":
-      "t_rex",
-
-    "Skele-Rex":
-      "skele_rex",
-
-    "S'mores Raccoon":
-      "smores_raccoon",
-
-    "Tió De Nadal":
-      "tio_de_nadal",
-
-    "Mr. Whiskerpips":
-      "mr_whiskerpips",
-
-    "Mrs. Whiskerpips":
-      "mrs_whiskerpips",
-
-    "Ms. Muffet":
-      "ms_muffet",
-
-    "Mecha R4BBIT":
-      "mecha_r4bbit"
-
-  };
+const $ = id => document.getElementById(id);
 
 
-  if (
-    special[name]
-  ) {
+function escapeHTML(value) {
 
-    return special[name];
-
-  }
-
-
-  return String(name)
-
-    .toLowerCase()
-
-    .normalize("NFD")
-
-    .replace(
-      /[\u0300-\u036f]/g,
-      ""
-    )
-
-    .replace(
-      /[’']/g,
-      ""
-    )
-
-    .replace(
-      /[^a-z0-9]+/g,
-      "_"
-    )
-
-    .replace(
-      /^_+|_+$/g,
-      "");
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 
 }
 
 
-/* =========================================================
-   EGG CHECK
-========================================================= */
+function formatValue(value) {
 
-function isEgg(
-  pet
-) {
+  const number = Number(value) || 0;
 
-  if (!pet) {
-    return false;
+  if (number < 1) {
+    return number.toFixed(2).replace(/0+$/, "").replace(/\.$/, "");
   }
 
+  if (number >= 1000) {
+    return number.toLocaleString("en-US", {
+      maximumFractionDigits: 2
+    });
+  }
 
-  const type =
-    String(
-      pet.type || ""
-    )
-      .toLowerCase();
+  if (Number.isInteger(number)) {
+    return String(number);
+  }
 
-
-  const name =
-    String(
-      pet.name || ""
-    );
-
-
-  return (
-    type.includes("egg") ||
-    /\begg\b/i.test(name)
-  );
+  return number.toFixed(2).replace(/0+$/, "").replace(/\.$/, "");
 
 }
 
 
-/* =========================================================
-   REAL IMAGE RESOLVER
-========================================================= */
+function rarityName(rarity) {
 
-function resolveImage(
-  imagePath,
-  name
-) {
-
-  let path =
-    String(
-      imagePath || ""
-    )
-      .trim();
-
-
-  /*
-    JSON:
-    /images/pets/Hedgehog.png
-
-    GERÇEK DOSYA:
-    /images/Hedgehog.png
-  */
-
-  if (path) {
-
-    /*
-      Tam URL
-    */
-
-    if (
-      /^https?:\/\//i.test(
-        path
-      )
-    ) {
-
-      return path;
-
-    }
-
-
-    /*
-      Sadece dosya adını al.
-      Böylece /images/pets/
-      veya başka klasör fark etmez.
-    */
-
-    const fileName =
-      path
-        .split("/")
-        .pop();
-
-
-    if (fileName) {
-
-      return (
-        PET_IMAGE_BASE +
-        "/images/" +
-        encodeURIComponent(
-          fileName
-        )
-      );
-
-    }
-
-  }
-
-
-  /*
-    Fallback
-  */
-
-  return (
-    PET_IMAGE_BASE +
-    "/images/" +
-    encodeURIComponent(
-      String(name || "")
-    ) +
-    ".png"
-  );
-
-}
-
-
-/* =========================================================
-   RARITY
-========================================================= */
-
-function normalizeRarity(
-  rarity
-) {
-
-  const value =
-    String(
-      rarity || ""
-    )
-      .toLowerCase()
-      .trim();
-
-
-  if (
-    value.includes(
-      "legendary"
-    )
-  ) {
-
-    return "legendary";
-
-  }
-
-
-  if (
-    value.includes(
-      "ultra"
-    )
-  ) {
-
-    return "ultra";
-
-  }
-
-
-  if (
-    value.includes(
-      "rare"
-    )
-  ) {
-
-    return "rare";
-
-  }
-
-
-  if (
-    value.includes(
-      "uncommon"
-    )
-  ) {
-
-    return "uncommon";
-
-  }
-
-
-  if (
-    value.includes(
-      "common"
-    )
-  ) {
-
-    return "common";
-
-  }
-
-
-  return "unknown";
-
-}
-
-
-function rarityName(
-  rarity
-) {
+  const r = String(rarity || "").toLowerCase();
 
   const names = {
+    common: "Common",
+    uncommon: "Uncommon",
+    rare: "Rare",
+    "ultra-rare": "Ultra Rare",
+    ultra_rare: "Ultra Rare",
+    legendary: "Legendary"
+  };
 
-    legendary:
-      "Legendary",
+  return names[r] || rarity || "Other";
 
-    ultra:
-      "Ultra-Rare",
+}
 
-    rare:
-      "Rare",
 
-    uncommon:
-      "Uncommon",
+function normalizeType(type) {
 
-    common:
-      "Common",
+  const t = String(type || "")
+    .toLowerCase()
+    .trim();
 
-    unknown:
-      ""
+  if (t.includes("pet wear") || t.includes("petwear")) {
+    return "pet wear";
+  }
+
+  if (t.includes("vehicle") || t.includes("car")) {
+    return "vehicle";
+  }
+
+  if (t.includes("stroller")) {
+    return "stroller";
+  }
+
+  if (t.includes("toy")) {
+    return "toy";
+  }
+
+  if (t.includes("food")) {
+    return "food";
+  }
+
+  if (t.includes("gift")) {
+    return "gift";
+  }
+
+  if (t.includes("sticker")) {
+    return "sticker";
+  }
+
+  if (t.includes("egg")) {
+    return "egg";
+  }
+
+  if (t.includes("pet")) {
+    return "pet";
+  }
+
+  return "other";
+
+}
+
+
+function isPet(item) {
+  return normalizeType(item?.type) === "pet";
+}
+
+
+function normalizeImage(image, name = "") {
+
+  if (!image && name) {
+
+    const file = String(name)
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, "_")
+      .replace(/^_+|_+$/g, "");
+
+    return `${PET_IMAGE_BASE}/images/${file}.png`;
+  }
+
+  if (!image) {
+    return "";
+  }
+
+  const img = String(image);
+
+  if (/^https?:\/\//i.test(img)) {
+    return img;
+  }
+
+  if (img.startsWith("//")) {
+    return "https:" + img;
+  }
+
+  if (img.startsWith("/")) {
+    return PET_IMAGE_BASE + img;
+  }
+
+  return `${PET_IMAGE_BASE}/${img.replace(/^\/+/, "")}`;
+
+}
+
+
+function getBaseValue(item) {
+
+  if (!item) return 0;
+
+  const override = CUSTOM_VALUE_OVERRIDES[item.name];
+
+  if (override !== undefined) {
+    return Number(override);
+  }
+
+  if (item.value !== undefined) {
+    return Number(item.value) || 0;
+  }
+
+  if (item.regular?.value !== undefined) {
+    return Number(item.regular.value) || 0;
+  }
+
+  return 0;
+
+}
+
+
+/* =========================================================
+   DATA NORMALIZATION
+========================================================= */
+
+function normalizeItem(raw, index = 0) {
+
+  if (!raw || typeof raw !== "object") {
+    return null;
+  }
+
+  const name =
+    raw.name ||
+    raw.title ||
+    raw.itemName ||
+    `Item ${index + 1}`;
+
+  let type =
+    raw.type ||
+    raw.category ||
+    raw.item_type ||
+    "other";
+
+  type = normalizeType(type);
+
+  let value = getBaseValue(raw);
+
+  const custom =
+    CUSTOM_VALUE_OVERRIDES[name];
+
+  if (custom !== undefined) {
+    value = Number(custom);
+  }
+
+  const image =
+    normalizeImage(
+      raw.image ||
+      raw.img ||
+      raw.icon ||
+      raw.thumbnail,
+      name
+    );
+
+  const item = {
+
+    id:
+      raw.id ||
+      raw.slug ||
+      name
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "_"),
+
+    name,
+    type,
+    rarity: String(raw.rarity || "other").toLowerCase(),
+    value,
+    image,
+
+    regular: raw.regular || null,
+    neon: raw.neon || null,
+    mega: raw.mega || null
 
   };
 
-
-  return (
-    names[rarity] ||
-    ""
-  );
+  return item;
 
 }
 
 
-/* =========================================================
-   FORMAT
-========================================================= */
+function extractArray(data) {
 
-function formatValue(
-  value
-) {
+  if (Array.isArray(data)) {
+    return data;
+  }
 
-  const number =
-    Number(
-      value || 0
-    );
+  if (!data || typeof data !== "object") {
+    return [];
+  }
 
+  const possibleKeys = [
+    "items",
+    "pets",
+    "data",
+    "values",
+    "adoptme",
+    "adoptMe"
+  ];
 
-  if (
-    !Number.isFinite(
-      number
-    )
-  ) {
+  for (const key of possibleKeys) {
 
-    return "0";
+    if (Array.isArray(data[key])) {
+      return data[key];
+    }
 
   }
 
+  const values = Object.values(data);
 
   if (
-    Number.isInteger(
-      number
+    values.length &&
+    values.every(
+      item =>
+        item &&
+        typeof item === "object" &&
+        !Array.isArray(item)
     )
   ) {
-
-    return String(
-      number
-    );
-
+    return values;
   }
 
-
-  return number
-
-    .toFixed(2)
-
-    .replace(
-      /0+$/,
-      ""
-    )
-
-    .replace(
-      /\.$/,
-      ""
-    );
+  return [];
 
 }
 
 
-/* =========================================================
-   ESCAPE HTML
-========================================================= */
-
-function escapeHTML(
-  value
-) {
-
-  return String(
-    value ?? ""
-  )
-
-    .replace(
-      /&/g,
-      "&amp;"
-    )
-
-    .replace(
-      /</g,
-      "&lt;"
-    )
-
-    .replace(
-      />/g,
-      "&gt;"
-    )
-
-    .replace(
-      /"/g,
-      "&quot;"
-    )
-
-    .replace(
-      /'/g,
-      "&#039;"
-    );
-
-}
-
-
-/* =========================================================
-   IMAGE HTML
-========================================================= */
-
-function imageHTML(
-  pet,
-  className = "pet-photo"
-) {
-
-  const image =
-    resolveImage(
-      pet?.image,
-      pet?.name
-    );
-
-
-  return `
-
-    <img
-
-      src="${escapeHTML(
-        image
-      )}"
-
-      alt="${escapeHTML(
-        pet?.name ||
-        "Pet"
-      )}"
-
-      class="${className}"
-
-      loading="lazy"
-
-      onerror="handleImageError(this)"
-
-    >
-
-  `;
-
-}
-
-
-/* =========================================================
-   IMAGE ERROR
-========================================================= */
-
-function handleImageError(
-  img
-) {
-
-  if (
-    !img ||
-    img.dataset.failed === "1"
-  ) {
-
-    return;
-
-  }
-
-
-  img.dataset.failed =
-    "1";
-
-
-  img.src =
-    "data:image/svg+xml;charset=UTF-8," +
-
-    encodeURIComponent(`
-
-      <svg
-
-        xmlns="http://www.w3.org/2000/svg"
-
-        width="160"
-        height="160"
-
-      >
-
-        <rect
-
-          width="160"
-          height="160"
-
-          rx="20"
-
-          fill="#15182a"
-
-        />
-
-        <text
-
-          x="80"
-          y="86"
-
-          text-anchor="middle"
-
-          fill="#8b93a7"
-
-          font-size="13"
-
-          font-family="Arial"
-
-        >
-          NO IMAGE
-        </text>
-
-      </svg>
-
-    `);
-
-}
-
-
-/* =========================================================
-   DATABASE LOADER
-========================================================= */
-
-async function loadFullPetDatabase() {
+async function loadDatabase() {
 
   try {
 
-    console.log(
-      "ZAYAXRA: FULL PET DATABASE yükleniyor..."
-    );
-
-
-    const response =
-      await fetch(
-        PET_DATA_URL +
-        "?v=" +
-        Date.now(),
-        {
-          cache:
-            "no-store"
-        }
-      );
-
-
-    if (
-      !response.ok
-    ) {
-
-      throw new Error(
-        `HTTP ${response.status}`
-      );
-
-    }
-
-
-    const raw =
-      await response.json();
-
-
-    if (
-      !Array.isArray(
-        raw
-      )
-    ) {
-
-      throw new Error(
-        "Veritabanı array değil."
-      );
-
-    }
-
-
-    const unique =
-      new Map();
-
-
-    raw.forEach(
-      (
-        item,
-        index
-      ) => {
-
-        const rawType =
-          String(
-            item?.type ||
-            ""
-          )
-            .toLowerCase();
-
-
-        /*
-          Sadece pet ve egg.
-          "pets" de eşleşir.
-        */
-
-        const isPet =
-          rawType.includes(
-            "pet"
-          );
-
-
-        const isEggType =
-          rawType.includes(
-            "egg"
-          );
-
-
-        if (
-          !isPet &&
-          !isEggType
-        ) {
-
-          return;
-
-        }
-
-
-        const name =
-          String(
-            item?.name ||
-            ""
-          )
-            .trim();
-
-
-        if (
-          !name
-        ) {
-
-          return;
-
-        }
-
-
-        let value =
-          Number(
-            item?.regular?.value
-          );
-
-
-        if (
-          !Number.isFinite(
-            value
-          )
-        ) {
-
-          value =
-            Number(
-              item?.value
-            );
-
-        }
-
-
-        if (
-          !Number.isFinite(
-            value
-          )
-        ) {
-
-          value = 0;
-
-        }
-
-
-        /*
-          Senin ZAYAXRA değerlerin
-          öncelikli.
-        */
-
-        if (
-          Object.prototype.hasOwnProperty.call(
-            CUSTOM_VALUE_OVERRIDES,
-            name
-          )
-        ) {
-
-          value =
-            CUSTOM_VALUE_OVERRIDES[
-              name
-            ];
-
-        }
-
-
-        const pet = {
-
-          id:
-            `pet_${item?.id ?? index}_${slug(name)}`,
-
-          name,
-
-          rarity:
-            normalizeRarity(
-              item?.rarity
-            ),
-
-          value,
-
-          image:
-            resolveImage(
-              item?.image,
-              name
-            ),
-
-          type:
-            isEggType ||
-            /\begg\b/i.test(
-              name
-            )
-              ? "egg"
-              : "pet"
-
-        };
-
-
-        /*
-          Aynı isimde kayıt varsa
-          son kaydı tut.
-        */
-
-        unique.set(
-          name.toLowerCase(),
-          pet
-        );
-
+    const response = await fetch(
+      PET_DATA_URL,
+      {
+        cache: "no-store"
       }
     );
 
+    if (!response.ok) {
+      throw new Error("Database response failed");
+    }
 
-    PET_DATABASE =
-      Array.from(
-        unique.values()
-      );
+    const json = await response.json();
 
+    const rawItems = extractArray(json);
 
-    PET_DATABASE.sort(
-      (
-        a,
-        b
-      ) =>
-        a.name.localeCompare(
-          b.name,
-          "en",
-          {
-            sensitivity:
-              "base"
-          }
-        )
-    );
+    const normalized = rawItems
+      .map(normalizeItem)
+      .filter(Boolean)
+      .filter(item => item.name);
 
+    const map = new Map();
 
-    databaseReady =
-      true;
+    for (const item of normalized) {
 
+      const key = item.name
+        .toLowerCase()
+        .trim();
 
-    console.log(
-      `ZAYAXRA: ${PET_DATABASE.length} PET + EGG yüklendi.`
-    );
+      if (!map.has(key)) {
+        map.set(key, item);
+      }
 
+    }
 
-    renderPickerPets();
+    allItems = Array.from(map.values());
 
+    mergeFallbackItems();
 
-  }
+  } catch (error) {
 
-  catch (
-    error
-  ) {
-
-    databaseReady =
-      false;
-
-
-    console.error(
-      "ZAYAXRA DATABASE HATASI:",
+    console.warn(
+      "ZAYAXRA database yüklenemedi:",
       error
     );
 
-
-    /*
-      Remote database açılmazsa
-      en azından custom petler kaybolmasın.
-    */
-
-    PET_DATABASE =
-      Object.entries(
-        CUSTOM_VALUE_OVERRIDES
-      )
-      .map(
-        (
-          [name, value],
-          index
-        ) => ({
-
-          id:
-            `fallback_${index}_${slug(name)}`,
-
-          name,
-
-          rarity:
-            "unknown",
-
-          value,
-
-          image:
-            resolveImage(
-              "",
-              name
-            ),
-
-          type:
-            isEgg({
-              name
-            })
-              ? "egg"
-              : "pet"
-
-        })
-      );
-
-
-    renderPickerPets();
+    allItems = FALLBACK_ITEMS.map(normalizeItem);
 
   }
+
+  if (!allItems.length) {
+    allItems = FALLBACK_ITEMS.map(normalizeItem);
+  }
+
+  applyValueFilters();
+  renderPicker();
+
+  updateCounters();
 
 }
 
 
-/* =========================================================
-   STORAGE
-========================================================= */
+function mergeFallbackItems() {
 
-function getTradeStats() {
-
-  try {
-
-    const data =
-      JSON.parse(
-
-        localStorage.getItem(
-          "zayaggTradeStats"
-        ) || "{}"
-
-      );
-
-
-    return {
-
-      wins:
-        Number(
-          data.wins
-        ) || 0,
-
-      fair:
-        Number(
-          data.fair
-        ) || 0,
-
-      loses:
-        Number(
-          data.loses
-        ) || 0
-
-    };
-
-  }
-
-  catch {
-
-    return {
-
-      wins: 0,
-
-      fair: 0,
-
-      loses: 0
-
-    };
-
-  }
-
-}
-
-
-function saveTradeStats(
-  stats
-) {
-
-  localStorage.setItem(
-
-    "zayaggTradeStats",
-
-    JSON.stringify({
-
-      wins:
-        Number(
-          stats.wins
-        ) || 0,
-
-      fair:
-        Number(
-          stats.fair
-        ) || 0,
-
-      loses:
-        Number(
-          stats.loses
-        ) || 0
-
-    })
-
-  );
-
-}
-
-
-function ensureStorageData() {
-
-  if (
-    !localStorage.getItem(
-      "zayaggTradeStats"
+  const existing = new Set(
+    allItems.map(
+      item => item.name.toLowerCase()
     )
-  ) {
+  );
 
-    saveTradeStats({
+  for (const fallback of FALLBACK_ITEMS) {
 
-      wins: 0,
+    const normalized =
+      normalizeItem(fallback);
 
-      fair: 0,
+    if (!normalized) continue;
 
-      loses: 0
+    if (!existing.has(
+      normalized.name.toLowerCase()
+    )) {
 
-    });
+      allItems.push(normalized);
+
+    }
 
   }
 
@@ -1101,1352 +531,149 @@ function ensureStorageData() {
 
 
 /* =========================================================
-   PROFILE STORAGE
+   MODIFIED PET VALUE
 ========================================================= */
 
-function getProfileData() {
+function getVariantValue(item, form) {
 
-  try {
+  if (!item) return 0;
 
-    const data =
-      JSON.parse(
-
-        localStorage.getItem(
-          "zayaggProfile"
-        ) || "{}"
-
-      );
-
-
-    return {
-
-      name:
-        data.name ||
-        "Zayaxra Kullanıcısı",
-
-      username:
-        data.username ||
-        "@kullanici",
-
-      bio:
-        data.bio ||
-        "Henüz bir biyografi eklenmedi.",
-
-      avatar:
-        data.avatar ||
-        "🐉"
-
-    };
-
-  }
-
-  catch {
-
-    return {
-
-      name:
-        "Zayaxra Kullanıcısı",
-
-      username:
-        "@kullanici",
-
-      bio:
-        "Henüz bir biyografi eklenmedi.",
-
-      avatar:
-        "🐉"
-
-    };
-
-  }
-
-}
-
-
-function saveProfileData(
-  data
-) {
-
-  localStorage.setItem(
-
-    "zayaggProfile",
-
-    JSON.stringify(
-      data
-    )
-
-  );
-
-}
-
-
-function migrateLegacyProfile() {
-
-  const migrationKey =
-    "zayaxraProfileMigrationV1";
-
+  const override =
+    CUSTOM_VALUE_OVERRIDES[item.name];
 
   if (
-    localStorage.getItem(
-      migrationKey
-    ) === "1"
+    form === "normal" &&
+    override !== undefined
+  ) {
+    return Number(override);
+  }
+
+  const variant =
+    item[form];
+
+  if (
+    variant &&
+    typeof variant === "object"
   ) {
 
-    return;
+    if (variant.value !== undefined) {
+      return Number(variant.value) || 0;
+    }
+
+    if (variant.no_potion !== undefined) {
+      return Number(variant.no_potion) || 0;
+    }
 
   }
 
+  if (
+    form === "neon" &&
+    item.regular?.value
+  ) {
+    return Number(item.regular.value) * 4;
+  }
 
-  try {
+  if (
+    form === "mega" &&
+    item.regular?.value
+  ) {
+    return Number(item.regular.value) * 16;
+  }
 
-    const raw =
-      localStorage.getItem(
-        "zayaggProfile"
-      );
+  const base = getBaseValue(item);
 
+  if (form === "neon") {
+    return base * 4;
+  }
 
-    if (!raw) {
+  if (form === "mega") {
+    return base * 16;
+  }
 
-      localStorage.setItem(
-        migrationKey,
-        "1"
-      );
+  return base;
 
-      return;
-
-    }
-
-
-    const data =
-      JSON.parse(
-        raw
-      );
-
-
-    const name =
-      String(
-        data?.name ||
-        ""
-      )
-        .toLowerCase();
+}
 
 
-    const username =
-      String(
-        data?.username ||
-        ""
-      )
-        .toLowerCase();
+function getModifiedValue(item, form = selectedForm, potion = selectedPotion) {
 
+  if (!item) return 0;
 
-    const bio =
-      String(
-        data?.bio ||
-        ""
-      )
-        .toLowerCase();
+  if (!isPet(item)) {
+    return getBaseValue(item);
+  }
 
+  const variant =
+    item[form];
 
-    const oldProfile =
+  let value = 0;
 
-      name.includes(
-        "zayagg"
-      )
-
-      ||
-
-      username.includes(
-        "zayagg"
-      )
-
-      ||
-
-      bio.includes(
-        "adm"
-      );
-
+  if (
+    variant &&
+    typeof variant === "object"
+  ) {
 
     if (
-      oldProfile
+      potion.fly &&
+      potion.ride &&
+      variant.fly_ride !== undefined
     ) {
 
-      saveProfileData({
+      value = Number(variant.fly_ride) || 0;
 
-        name:
-          "Zayaxra Kullanıcısı",
+    } else if (
+      potion.fly &&
+      variant.fly !== undefined
+    ) {
 
-        username:
-          "@kullanici",
+      value = Number(variant.fly) || 0;
 
-        bio:
-          "Henüz bir biyografi eklenmedi.",
+    } else if (
+      potion.ride &&
+      variant.ride !== undefined
+    ) {
 
-        avatar:
-          data?.avatar ||
-          "🐉"
+      value = Number(variant.ride) || 0;
 
-      });
+    } else if (
+      variant.no_potion !== undefined
+    ) {
+
+      value = Number(variant.no_potion) || 0;
+
+    } else if (
+      variant.value !== undefined
+    ) {
+
+      value = Number(variant.value) || 0;
 
     }
 
-
-    localStorage.setItem(
-      migrationKey,
-      "1"
-    );
-
   }
 
-  catch {
-
-    saveProfileData({
-
-      name:
-        "Zayaxra Kullanıcısı",
-
-      username:
-        "@kullanici",
-
-      bio:
-        "Henüz bir biyografi eklenmedi.",
-
-      avatar:
-        "🐉"
-
-    });
-
-
-    localStorage.setItem(
-      migrationKey,
-      "1"
-    );
-
+  if (!value) {
+    value = getVariantValue(item, form);
   }
-
-}
-
-
-/* =========================================================
-   PET PICKER
-========================================================= */
-
-function openPetPicker(
-  side
-) {
 
   if (
-    side !== "you" &&
-    side !== "them"
+    form === "normal" &&
+    CUSTOM_VALUE_OVERRIDES[item.name] !== undefined
   ) {
 
-    return;
-
-  }
-
-
-  pickerSide =
-    side;
-
-
-  selectedPet =
-    null;
-
-
-  selectedForm =
-    "normal";
-
-
-  selectedPotion = {
-
-    fly: false,
-
-    ride: false
-
-  };
-
-
-  const modal =
-    $("petPicker");
-
-
-  const search =
-    $("petSearch");
-
-
-  const title =
-    $("petPickerTitle");
-
-
-  if (
-    title
-  ) {
-
-    title.textContent =
-
-      side === "you"
-
-        ? "Senin teklifine pet ekle"
-
-        : "Karşı tarafın teklifine pet ekle";
-
-  }
-
-
-  if (
-    search
-  ) {
-
-    search.value =
-      "";
-
-  }
-
-
-  $("pickerBar")
-    ?.classList.add(
-      "hidden"
-    );
-
-
-  resetPickerButtons();
-
-
-  renderPickerPets(
-    PET_DATABASE
-  );
-
-
-  if (
-    modal
-  ) {
-
-    modal.classList.add(
-      "show"
-    );
-
-    modal.classList.add(
-      "active"
-    );
-
-    modal.setAttribute(
-      "aria-hidden",
-      "false"
-    );
-
-  }
-
-
-  document.body.classList.add(
-    "modal-open"
-  );
-
-
-  document.body.classList.add(
-    "profile-open"
-  );
-
-
-  setTimeout(
-    () => {
-
-      search?.focus();
-
-    },
-    50
-  );
-
-}
-
-
-function closePetPicker() {
-
-  const modal =
-    $("petPicker");
-
-
-  if (
-    modal
-  ) {
-
-    modal.classList.remove(
-      "show"
-    );
-
-    modal.classList.remove(
-      "active"
-    );
-
-    modal.setAttribute(
-      "aria-hidden",
-      "true"
-    );
-
-  }
-
-
-  document.body.classList.remove(
-    "profile-open"
-  );
-
-
-  if (
-    !$("profileModal")
-      ?.classList.contains(
-        "active"
-      )
-  ) {
-
-    document.body.classList.remove(
-      "modal-open"
-    );
-
-  }
-
-
-  pickerSide =
-    null;
-
-
-  selectedPet =
-    null;
-
-}
-
-
-/* =========================================================
-   RENDER PICKER
-========================================================= */
-
-function renderPickerPets(
-  list = PET_DATABASE
-) {
-
-  const box =
-    $("pickerPets");
-
-
-  if (!box) {
-    return;
-  }
-
-
-  box.innerHTML =
-    "";
-
-
-  if (
-    !Array.isArray(
-      list
-    ) ||
-    !list.length
-  ) {
-
-    box.innerHTML = `
-
-      <div class="empty-picker">
-
-        <span>🔎</span>
-
-        <strong>
-          Pet bulunamadı
-        </strong>
-
-        <small>
-          Arama kelimesini değiştir.
-        </small>
-
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-
-  const fragment =
-    document.createDocumentFragment();
-
-
-  list.forEach(
-    pet => {
-
-      const button =
-        document.createElement(
-          "button"
-        );
-
-
-      button.type =
-        "button";
-
-
-      button.className =
-        "pet-choice";
-
-
-      button.innerHTML = `
-
-        <div class="choice-image">
-
-          ${imageHTML(
-            pet
-          )}
-
-        </div>
-
-
-        <strong>
-
-          ${escapeHTML(
-            pet.name
-          )}
-
-        </strong>
-
-
-        <span
-          class="rarity-tag ${escapeHTML(
-            pet.rarity
-          )}"
-        >
-
-          ${escapeHTML(
-            rarityName(
-              pet.rarity
-            )
-          )}
-
-        </span>
-
-
-        <small>
-
-          ${formatValue(
-            pet.value
-          )}
-
-        </small>
-
-      `;
-
-
-      button.addEventListener(
-        "click",
-        () => {
-
-          selectPickerPet(
-            pet
-          );
-
-        }
-      );
-
-
-      fragment.appendChild(
-        button
-      );
-
-    }
-  );
-
-
-  box.appendChild(
-    fragment
-  );
-
-}
-
-
-/* =========================================================
-   SEARCH FILTER
-========================================================= */
-
-function filterPickerPets() {
-
-  const query =
-    String(
-      $("petSearch")?.value ||
-      ""
-    )
-      .trim()
-      .toLowerCase();
-
-
-  const filtered =
-    PET_DATABASE.filter(
-      pet => {
-
-        const name =
-          String(
-            pet.name ||
-            ""
-          )
-            .toLowerCase();
-
-
-        const rarity =
-          String(
-            pet.rarity ||
-            ""
-          )
-            .toLowerCase();
-
-
-        const type =
-          String(
-            pet.type ||
-            ""
-          )
-            .toLowerCase();
-
-
-        return (
-
-          name.includes(
-            query
-          )
-
-          ||
-
-          rarity.includes(
-            query
-          )
-
-          ||
-
-          type.includes(
-            query
-          )
-
-        );
-
-      }
-    );
-
-
-  renderPickerPets(
-    filtered
-  );
-
-}
-
-
-/* =========================================================
-   SELECT PET
-========================================================= */
-
-function selectPickerPet(
-  pet
-) {
-
-  if (!pet) {
-    return;
-  }
-
-
-  selectedPet =
-    pet;
-
-
-  selectedForm =
-    "normal";
-
-
-  selectedPotion = {
-
-    fly: false,
-
-    ride: false
-
-  };
-
-
-  if (
-    isEgg(
-      pet
-    )
-  ) {
-
-    selectedForm =
-      "normal";
-
-
-    selectedPotion = {
-
-      fly: false,
-
-      ride: false
-
-    };
-
-  }
-
-
-  $("pickerBar")
-    ?.classList.remove(
-      "hidden"
-    );
-
-
-  renderPickerPreview();
-
-  updatePickerButtons();
-
-  updatePickerValue();
-
-  filterPickerPets();
-
-}
-
-
-/* =========================================================
-   PICKER PREVIEW
-========================================================= */
-
-function renderPickerPreview() {
-
-  const box =
-    $("pickerPreview");
-
-
-  if (
-    !box ||
-    !selectedPet
-  ) {
-
-    return;
-
-  }
-
-
-  const egg =
-    isEgg(
-      selectedPet
-    );
-
-
-  const chips = [];
-
-
-  if (!egg) {
+    const custom =
+      Number(CUSTOM_VALUE_OVERRIDES[item.name]);
 
     if (
-      selectedForm ===
-      "neon"
-    ) {
-
-      chips.push(
-        `<span class="vchip neon">NEON</span>`
-      );
-
-    }
-
-
-    if (
-      selectedForm ===
-      "mega"
-    ) {
-
-      chips.push(
-        `<span class="vchip mega">MEGA</span>`
-      );
-
-    }
-
-
-    if (
-      selectedPotion.fly
-    ) {
-
-      chips.push(
-        `<span class="vchip fly">FLY</span>`
-      );
-
-    }
-
-
-    if (
-      selectedPotion.ride
-    ) {
-
-      chips.push(
-        `<span class="vchip ride">RIDE</span>`
-      );
-
-    }
-
-  }
-
-
-  box.innerHTML = `
-
-    <div class="pet-image-wrap">
-
-      ${
-        selectedForm === "neon" &&
-        !egg
-
-          ? `<div class="neon-effect"></div>`
-
-          : ""
-      }
-
-
-      ${
-        selectedForm === "mega" &&
-        !egg
-
-          ? `<div class="mega-effect"></div>`
-
-          : ""
-      }
-
-
-      ${imageHTML(
-        selectedPet
-      )}
-
-
-      <div class="pet-badges">
-
-        ${
-          selectedForm === "neon" &&
-          !egg
-
-            ? `<span class="mini-chip neon">N</span>`
-
-            : ""
-        }
-
-
-        ${
-          selectedForm === "mega" &&
-          !egg
-
-            ? `<span class="mini-chip mega">M</span>`
-
-            : ""
-        }
-
-
-        ${
-          selectedPotion.fly &&
-          !egg
-
-            ? `<span class="mini-chip fly">F</span>`
-
-            : ""
-        }
-
-
-        ${
-          selectedPotion.ride &&
-          !egg
-
-            ? `<span class="mini-chip ride">R</span>`
-
-            : ""
-        }
-
-      </div>
-
-    </div>
-
-
-    <div class="preview-info">
-
-      <strong>
-
-        ${escapeHTML(
-          selectedPet.name
-        )}
-
-      </strong>
-
-
-      <span>
-
-        ${escapeHTML(
-          rarityName(
-            selectedPet.rarity
-          )
-        )}
-
-      </span>
-
-
-      <div class="vchip-row">
-
-        ${chips.join("")}
-
-      </div>
-
-    </div>
-
-  `;
-
-}
-
-
-/* =========================================================
-   PICKER BUTTONS
-========================================================= */
-
-function resetPickerButtons() {
-
-  $("normalFormBtn")
-    ?.classList.add(
-      "active"
-    );
-
-
-  $("btnNeon")
-    ?.classList.remove(
-      "active"
-    );
-
-
-  $("btnMega")
-    ?.classList.remove(
-      "active"
-    );
-
-
-  $("noPotionBtn")
-    ?.classList.add(
-      "active"
-    );
-
-
-  $("btnFly")
-    ?.classList.remove(
-      "active"
-    );
-
-
-  $("btnRide")
-    ?.classList.remove(
-      "active"
-    );
-
-
-  $("flyRideBtn")
-    ?.classList.remove(
-      "active"
-    );
-
-}
-
-
-function updatePickerButtons() {
-
-  const egg =
-    isEgg(
-      selectedPet
-    );
-
-
-  $("normalFormBtn")
-    ?.classList.toggle(
-      "active",
-      selectedForm ===
-        "normal"
-    );
-
-
-  $("btnNeon")
-    ?.classList.toggle(
-      "active",
-      !egg &&
-      selectedForm ===
-        "neon"
-    );
-
-
-  $("btnMega")
-    ?.classList.toggle(
-      "active",
-      !egg &&
-      selectedForm ===
-        "mega"
-    );
-
-
-  $("noPotionBtn")
-    ?.classList.toggle(
-
-      "active",
-
-      egg ||
-
+      !variant ||
       (
-        !selectedPotion.fly &&
-        !selectedPotion.ride
+        variant.no_potion === undefined &&
+        variant.value === undefined
       )
-
-    );
-
-
-  $("btnFly")
-    ?.classList.toggle(
-
-      "active",
-
-      !egg &&
-      selectedPotion.fly &&
-      !selectedPotion.ride
-
-    );
-
-
-  $("btnRide")
-    ?.classList.toggle(
-
-      "active",
-
-      !egg &&
-      selectedPotion.ride &&
-      !selectedPotion.fly
-
-    );
-
-
-  $("flyRideBtn")
-    ?.classList.toggle(
-
-      "active",
-
-      !egg &&
-      selectedPotion.fly &&
-      selectedPotion.ride
-
-    );
-
-
-  if (
-    egg
-  ) {
-
-    $("btnNeon")
-      ?.classList.remove(
-        "active"
-      );
-
-    $("btnMega")
-      ?.classList.remove(
-        "active"
-      );
-
-    $("btnFly")
-      ?.classList.remove(
-        "active"
-      );
-
-    $("btnRide")
-      ?.classList.remove(
-        "active"
-      );
-
-    $("flyRideBtn")
-      ?.classList.remove(
-        "active"
-      );
-
-    $("noPotionBtn")
-      ?.classList.add(
-        "active"
-      );
+    ) {
+      value = custom;
+    }
 
   }
-
-}
-
-
-/* =========================================================
-   FORM
-========================================================= */
-
-function toggleForm(
-  form
-) {
-
-  if (
-    !selectedPet
-  ) {
-
-    return;
-
-  }
-
-
-  if (
-    isEgg(
-      selectedPet
-    )
-  ) {
-
-    selectedForm =
-      "normal";
-
-
-    updatePickerButtons();
-
-    renderPickerPreview();
-
-    updatePickerValue();
-
-
-    return;
-
-  }
-
-
-  if (
-    ![
-      "normal",
-      "neon",
-      "mega"
-    ].includes(
-      form
-    )
-  ) {
-
-    return;
-
-  }
-
-
-  selectedForm =
-
-    selectedForm === form
-
-      ? "normal"
-
-      : form;
-
-
-  renderPickerPreview();
-
-  updatePickerButtons();
-
-  updatePickerValue();
-
-}
-
-
-/* =========================================================
-   POTION
-========================================================= */
-
-function togglePotion(
-  type
-) {
-
-  if (
-    !selectedPet
-  ) {
-
-    return;
-
-  }
-
-
-  if (
-    isEgg(
-      selectedPet
-    )
-  ) {
-
-    selectedPotion = {
-
-      fly: false,
-
-      ride: false
-
-    };
-
-
-    updatePickerButtons();
-
-    renderPickerPreview();
-
-    updatePickerValue();
-
-
-    return;
-
-  }
-
-
-  if (
-    type ===
-    "none"
-  ) {
-
-    selectedPotion = {
-
-      fly: false,
-
-      ride: false
-
-    };
-
-  }
-
-
-  else if (
-    type ===
-    "fly"
-  ) {
-
-    selectedPotion = {
-
-      fly:
-        !(
-          selectedPotion.fly &&
-          !selectedPotion.ride
-        ),
-
-      ride:
-        false
-
-    };
-
-  }
-
-
-  else if (
-    type ===
-    "ride"
-  ) {
-
-    selectedPotion = {
-
-      fly:
-        false,
-
-      ride:
-        !(
-          selectedPotion.ride &&
-          !selectedPotion.fly
-        )
-
-    };
-
-  }
-
-
-  else if (
-    type ===
-    "flyride"
-  ) {
-
-    const active =
-      selectedPotion.fly &&
-      selectedPotion.ride;
-
-
-    selectedPotion = {
-
-      fly:
-        !active,
-
-      ride:
-        !active
-
-    };
-
-  }
-
-
-  renderPickerPreview();
-
-  updatePickerButtons();
-
-  updatePickerValue();
-
-}
-
-
-/* =========================================================
-   MODIFIED VALUE
-========================================================= */
-
-function getModifiedValue(
-  pet
-) {
-
-  if (!pet) {
-    return 0;
-  }
-
-
-  let value =
-    Number(
-      pet.value || 0
-    );
-
-
-  if (
-    !Number.isFinite(
-      value
-    )
-  ) {
-
-    value = 0;
-
-  }
-
-
-  if (
-    isEgg(
-      pet
-    )
-  ) {
-
-    return value;
-
-  }
-
-
-  if (
-    selectedForm ===
-    "neon"
-  ) {
-
-    value *= 4;
-
-  }
-
-
-  else if (
-    selectedForm ===
-    "mega"
-  ) {
-
-    value *= 16;
-
-  }
-
-
-  if (
-    selectedPotion.fly
-  ) {
-
-    value += 0.25;
-
-  }
-
-
-  if (
-    selectedPotion.ride
-  ) {
-
-    value += 0.25;
-
-  }
-
 
   return value;
 
@@ -2454,160 +681,766 @@ function getModifiedValue(
 
 
 /* =========================================================
-   PICKER VALUE
+   VALUES PAGE
 ========================================================= */
 
-function updatePickerValue() {
+function applyValueFilters() {
 
-  const element =
-    $("pickerValue");
+  const search =
+    ($("search")?.value || "")
+      .trim()
+      .toLowerCase();
+
+  const rarity =
+    $("rarityFilter")?.value || "all";
+
+  filteredValues =
+    allItems.filter(item => {
+
+      const matchesSearch =
+        !search ||
+        item.name
+          .toLowerCase()
+          .includes(search);
+
+      const matchesCategory =
+        valueCategory === "all" ||
+        normalizeType(item.type) === valueCategory;
+
+      const matchesRarity =
+        rarity === "all" ||
+        item.rarity === rarity;
+
+      return (
+        matchesSearch &&
+        matchesCategory &&
+        matchesRarity
+      );
+
+    });
 
 
-  if (!element) {
-    return;
-  }
+  const sort =
+    $("sortSelect")?.value ||
+    "value-desc";
 
 
-  if (!selectedPet) {
+  filteredValues.sort((a, b) => {
 
-    element.textContent =
-      "0";
+    if (sort === "value-asc") {
+      return getBaseValue(a) - getBaseValue(b);
+    }
 
-    return;
+    if (sort === "name-asc") {
+      return a.name.localeCompare(b.name);
+    }
 
-  }
+    if (sort === "name-desc") {
+      return b.name.localeCompare(a.name);
+    }
+
+    return getBaseValue(b) - getBaseValue(a);
+
+  });
 
 
-  element.textContent =
-    formatValue(
-      getModifiedValue(
-        selectedPet
-      )
+  visibleValueCount = 60;
+
+  renderValues();
+
+}
+
+
+function renderValues() {
+
+  const grid = $("valueGrid");
+
+  if (!grid) return;
+
+  const visible =
+    filteredValues.slice(
+      0,
+      visibleValueCount
     );
+
+  if (!visible.length) {
+
+    grid.innerHTML = `
+      <div class="empty-trade" style="grid-column:1/-1;min-height:250px;">
+        <div class="empty-icon">🔎</div>
+        <strong>Item bulunamadı</strong>
+        <span>Arama veya filtrelerini değiştirmeyi dene.</span>
+      </div>
+    `;
+
+  } else {
+
+    grid.innerHTML =
+      visible
+        .map(valueCardHTML)
+        .join("");
+
+  }
+
+
+  const count = $("itemCount");
+
+  if (count) {
+    count.textContent =
+      filteredValues.length.toLocaleString();
+  }
+
+
+  const more =
+    $("loadMoreWrapper");
+
+  if (more) {
+
+    more.style.display =
+      visibleValueCount <
+      filteredValues.length
+        ? "flex"
+        : "none";
+
+  }
+
+}
+
+
+function valueCardHTML(item) {
+
+  const value =
+    getBaseValue(item);
+
+  const image =
+    escapeHTML(item.image);
+
+  return `
+    <article class="value-card">
+
+      <img
+        class="value-card-image"
+        src="${image}"
+        alt="${escapeHTML(item.name)}"
+        loading="lazy"
+        onerror="this.style.opacity='.2'"
+      >
+
+      <div class="value-card-info">
+
+        <span class="value-card-name">
+          ${escapeHTML(item.name)}
+        </span>
+
+        <span class="value-card-rarity">
+          ${escapeHTML(rarityName(item.rarity))}
+        </span>
+
+        <strong class="value-card-value">
+          ${formatValue(value)}
+        </strong>
+
+        <small class="value-card-category">
+          ${escapeHTML(item.type)}
+        </small>
+
+      </div>
+
+    </article>
+  `;
+
+}
+
+
+function setValueCategory(category) {
+
+  valueCategory = category || "all";
+
+  document
+    .querySelectorAll("#categoryBar button")
+    .forEach(button => {
+
+      button.classList.toggle(
+        "active",
+        button.dataset.category === valueCategory
+      );
+
+    });
+
+  applyValueFilters();
+
+}
+
+
+function loadMoreItems() {
+
+  visibleValueCount += 60;
+
+  renderValues();
+
+}
+
+
+function clearSearchInput() {
+
+  const search = $("search");
+
+  if (search) {
+    search.value = "";
+  }
+
+  applyValueFilters();
+
+}
+
+
+function updateCounters() {
+
+  const home =
+    $("homeItemCount");
+
+  if (home) {
+
+    home.textContent =
+      allItems.length.toLocaleString() + "+";
+
+  }
 
 }
 
 
 /* =========================================================
-   ADD PET
+   PICKER
 ========================================================= */
 
-function confirmAddPet() {
+function openPetPicker(side) {
 
-  if (
-    !selectedPet ||
-    !pickerSide
-  ) {
+  pickerSide = side;
+
+  selectedItem = null;
+
+  selectedForm = "normal";
+
+  selectedPotion = {
+    fly: false,
+    ride: false
+  };
+
+  pickerCategory = "all";
+
+  const modal =
+    $("petPickerModal");
+
+  if (!modal) return;
+
+  modal.classList.add("open");
+
+  document.body.style.overflow = "hidden";
+
+  const title =
+    $("petPickerTitle");
+
+  if (title) {
+
+    title.textContent =
+      side === "you"
+        ? "Senin Item'in"
+        : "Karşı Tarafın Item'i";
+
+  }
+
+  const search =
+    $("pickerSearch");
+
+  if (search) {
+    search.value = "";
+  }
+
+  updatePickerCategories();
+  renderPicker();
+  resetPickerPreview();
+
+}
+
+
+function closePetPicker() {
+
+  const modal =
+    $("petPickerModal");
+
+  if (modal) {
+    modal.classList.remove("open");
+  }
+
+  document.body.style.overflow = "";
+
+}
+
+
+function setPickerCategory(category) {
+
+  pickerCategory = category || "all";
+
+  updatePickerCategories();
+  renderPicker();
+
+}
+
+
+function updatePickerCategories() {
+
+  document
+    .querySelectorAll(
+      "#pickerCategoryBar button"
+    )
+    .forEach(button => {
+
+      button.classList.toggle(
+        "active",
+        button.dataset.category === pickerCategory
+      );
+
+    });
+
+}
+
+
+function renderPicker() {
+
+  const container =
+    $("pickerPetList");
+
+  if (!container) return;
+
+  const search =
+    ($("pickerSearch")?.value || "")
+      .trim()
+      .toLowerCase();
+
+  const list =
+    allItems.filter(item => {
+
+      const matchesSearch =
+        !search ||
+        item.name
+          .toLowerCase()
+          .includes(search);
+
+      const matchesCategory =
+        pickerCategory === "all" ||
+        normalizeType(item.type) === pickerCategory;
+
+      return (
+        matchesSearch &&
+        matchesCategory
+      );
+
+    });
+
+
+  container.innerHTML =
+    list
+      .map(pickerItemHTML)
+      .join("");
+
+
+  if (!list.length) {
+
+    container.innerHTML = `
+      <div class="empty-trade"
+           style="grid-column:1/-1;min-height:260px;">
+        <div class="empty-icon">🔎</div>
+        <strong>Item bulunamadı</strong>
+        <span>Başka bir isim veya kategori dene.</span>
+      </div>
+    `;
+
+  }
+
+}
+
+
+function pickerItemHTML(item) {
+
+  const selected =
+    selectedItem?.id === item.id
+      ? "selected"
+      : "";
+
+  return `
+    <button
+      class="pet-choice ${selected}"
+      onclick="selectPickerPet('${escapeHTML(item.id)}')"
+      type="button"
+    >
+
+      <img
+        src="${escapeHTML(item.image)}"
+        alt="${escapeHTML(item.name)}"
+        loading="lazy"
+        onerror="this.style.opacity='.2'"
+      >
+
+      <span class="pet-choice-name">
+        ${escapeHTML(item.name)}
+      </span>
+
+      <span class="pet-choice-value">
+        ${formatValue(getBaseValue(item))}
+      </span>
+
+      <span class="rarity-tag">
+        ${escapeHTML(rarityName(item.rarity))}
+      </span>
+
+    </button>
+  `;
+
+}
+
+
+function selectPickerPet(id) {
+
+  selectedItem =
+    allItems.find(
+      item => String(item.id) === String(id)
+    );
+
+  if (!selectedItem) return;
+
+  selectedForm = "normal";
+
+  selectedPotion = {
+    fly: false,
+    ride: false
+  };
+
+  renderPicker();
+  renderPickerPreview();
+  updatePickerButtons();
+
+}
+
+
+function resetPickerPreview() {
+
+  const image =
+    $("pickerPreview");
+
+  if (image) {
+    image.src = "";
+    image.alt = "";
+  }
+
+  if ($("pickerSelectedName")) {
+    $("pickerSelectedName")
+      .textContent = "Item seç";
+  }
+
+  if ($("pickerSelectedRarity")) {
+    $("pickerSelectedRarity")
+      .textContent = "—";
+  }
+
+  if ($("pickerValue")) {
+    $("pickerValue")
+      .textContent = "0";
+  }
+
+  updatePickerButtons();
+
+}
+
+
+function renderPickerPreview() {
+
+  if (!selectedItem) {
+    resetPickerPreview();
+    return;
+  }
+
+  const image =
+    $("pickerPreview");
+
+  if (image) {
+
+    image.src =
+      selectedItem.image;
+
+    image.alt =
+      selectedItem.name;
+
+  }
+
+  if ($("pickerSelectedName")) {
+
+    $("pickerSelectedName")
+      .textContent =
+      selectedItem.name;
+
+  }
+
+  if ($("pickerSelectedRarity")) {
+
+    $("pickerSelectedRarity")
+      .textContent =
+      rarityName(selectedItem.rarity);
+
+  }
+
+  updatePickerValue();
+  updatePickerButtons();
+
+}
+
+
+function toggleForm(form) {
+
+  if (!selectedItem || !isPet(selectedItem)) {
+    return;
+  }
+
+  selectedForm = form;
+
+  updatePickerButtons();
+  updatePickerValue();
+
+}
+
+
+function togglePotion(type) {
+
+  if (!selectedItem || !isPet(selectedItem)) {
+    return;
+  }
+
+  if (type === "fly") {
+    selectedPotion.fly =
+      !selectedPotion.fly;
+  }
+
+  if (type === "ride") {
+    selectedPotion.ride =
+      !selectedPotion.ride;
+  }
+
+  updatePickerButtons();
+  updatePickerValue();
+
+}
+
+
+function updatePickerButtons() {
+
+  const formOptions =
+    $("formOptions");
+
+  const potionOptions =
+    $("potionOptions");
+
+  const isPetSelected =
+    selectedItem &&
+    isPet(selectedItem);
+
+
+  if (formOptions) {
+
+    formOptions.style.display =
+      isPetSelected
+        ? "block"
+        : "none";
+
+  }
+
+
+  if (potionOptions) {
+
+    potionOptions.style.display =
+      isPetSelected
+        ? "block"
+        : "none";
+
+  }
+
+
+  document
+    .querySelectorAll(
+      "#formOptions .option-button"
+    )
+    .forEach(button => {
+
+      button.classList.toggle(
+        "active",
+        button.dataset.form === selectedForm
+      );
+
+    });
+
+
+  document
+    .querySelectorAll(
+      "#potionOptions .option-button"
+    )
+    .forEach(button => {
+
+      const potion =
+        button.dataset.potion;
+
+      const active =
+        potion === "fly"
+          ? selectedPotion.fly
+          : selectedPotion.ride;
+
+      button.classList.toggle(
+        "active",
+        active
+      );
+
+    });
+
+}
+
+
+function updatePickerValue() {
+
+  if (!$("pickerValue")) return;
+
+  if (!selectedItem) {
+
+    $("pickerValue")
+      .textContent = "0";
 
     return;
 
   }
 
-
-  const egg =
-    isEgg(
-      selectedPet
+  const value =
+    getModifiedValue(
+      selectedItem,
+      selectedForm,
+      selectedPotion
     );
 
+  $("pickerValue")
+    .textContent =
+    formatValue(value);
 
-  if (egg) {
-
-    selectedForm =
-      "normal";
+}
 
 
-    selectedPotion = {
+/* =========================================================
+   ADD TO TRADE
+========================================================= */
 
-      fly: false,
+function confirmAddPet() {
 
-      ride: false
+  if (!selectedItem) {
 
-    };
+    showToast(
+      "⚠️",
+      "Önce bir item seç."
+    );
+
+    return;
 
   }
 
-
   const item = {
 
-    id:
-      selectedPet.id,
+    ...selectedItem,
 
-    name:
-      selectedPet.name,
-
-    rarity:
-      selectedPet.rarity,
-
-    image:
-      selectedPet.image,
-
-    type:
-      egg
-        ? "egg"
-        : "pet",
-
-    baseValue:
-      Number(
-        selectedPet.value ||
-        0
-      ),
-
-    value:
-      getModifiedValue(
-        selectedPet
-      ),
+    tradeId:
+      Date.now() +
+      Math.random(),
 
     form:
-      selectedForm,
+      isPet(selectedItem)
+        ? selectedForm
+        : "normal",
 
     fly:
-      egg
-        ? false
-        : Boolean(
-            selectedPotion.fly
-          ),
+      isPet(selectedItem)
+        ? selectedPotion.fly
+        : false,
 
     ride:
-      egg
-        ? false
-        : Boolean(
-            selectedPotion.ride
-          ),
-
-    uniqueId:
-
-      `${Date.now()}_${Math.random()
-        .toString(36)
-        .slice(2, 10)}`
+      isPet(selectedItem)
+        ? selectedPotion.ride
+        : false
 
   };
 
 
+  if (pickerSide === "you") {
+
+    youTrade.push(item);
+
+  } else {
+
+    themTrade.push(item);
+
+  }
+
+
+  updateTradeUI();
+  closePetPicker();
+
+  showToast(
+    "✓",
+    `${selectedItem.name} trade'e eklendi.`
+  );
+
+}
+
+
+function removeTradeItem(side, tradeId) {
+
+  if (side === "you") {
+
+    youTrade =
+      youTrade.filter(
+        item => item.tradeId !== tradeId
+      );
+
+  } else {
+
+    themTrade =
+      themTrade.filter(
+        item => item.tradeId !== tradeId
+      );
+
+  }
+
+  updateTradeUI();
+
+}
+
+
+function clearTrade(side) {
+
+  if (side === "you") {
+
+    youTrade = [];
+
+  } else if (side === "them") {
+
+    themTrade = [];
+
+  } else {
+
+    youTrade = [];
+    themTrade = [];
+
+  }
+
   if (
-    pickerSide ===
-    "you"
+    youTrade.length === 0 &&
+    themTrade.length === 0
   ) {
 
-    youTrade.push(
-      item
-    );
+    tradeSessionRecorded = false;
 
   }
-
-  else {
-
-    themTrade.push(
-      item
-    );
-
-  }
-
-
-  recordedTradeKey =
-    "";
-
-
-  closePetPicker();
 
   updateTradeUI();
 
@@ -2615,112 +1448,149 @@ function confirmAddPet() {
 
 
 /* =========================================================
-   TOTAL
+   TRADE HTML
 ========================================================= */
 
-function calculateTotal(
-  trade
-) {
+function tradeItemHTML(item, side) {
 
-  if (
-    !Array.isArray(
-      trade
-    )
-  ) {
+  const value =
+    getModifiedValue(
+      item,
+      item.form,
+      {
+        fly: item.fly,
+        ride: item.ride
+      }
+    );
 
-    return 0;
 
+  const badges = [];
+
+  if (item.fly) {
+    badges.push("F");
+  }
+
+  if (item.ride) {
+    badges.push("R");
+  }
+
+  if (item.form === "neon") {
+    badges.push("N");
+  }
+
+  if (item.form === "mega") {
+    badges.push("M");
   }
 
 
+  return `
+    <article class="trade-item">
+
+      <button
+        class="remove-item-btn"
+        onclick="removeTradeItem('${side}', ${item.tradeId})"
+        type="button"
+        title="Kaldır"
+      >
+        ×
+      </button>
+
+      <img
+        class="trade-item-image"
+        src="${escapeHTML(item.image)}"
+        alt="${escapeHTML(item.name)}"
+        onerror="this.style.opacity='.2'"
+      >
+
+      <div class="trade-item-info">
+
+        <span class="trade-item-name">
+          ${escapeHTML(item.name)}
+        </span>
+
+        <strong class="trade-item-value">
+          ${formatValue(value)}
+        </strong>
+
+        ${
+          badges.length
+            ? `
+              <small style="
+                color:#a78bfa;
+                font-size:7px;
+                font-weight:900;
+              ">
+                ${badges.join(" • ")}
+              </small>
+            `
+            : ""
+        }
+
+      </div>
+
+    </article>
+  `;
+
+}
+
+
+function calculateTotal(trade) {
+
   return trade.reduce(
+    (total, item) => {
 
-    (
-      total,
-      pet
-    ) => {
-
-      const value =
-        Number(
-          pet?.value ||
-          0
+      return total +
+        getModifiedValue(
+          item,
+          item.form,
+          {
+            fly: item.fly,
+            ride: item.ride
+          }
         );
 
-
-      return (
-
-        total +
-
-        (
-          Number.isFinite(
-            value
-          )
-            ? value
-            : 0
-        )
-
-      );
-
     },
-
     0
-
   );
 
 }
 
 
-/* =========================================================
-   TRADE RENDER
-========================================================= */
+function renderTradeSide(side) {
 
-function renderTradeSide(
-  elementId,
-  trade,
-  side
-) {
+  const trade =
+    side === "you"
+      ? youTrade
+      : themTrade;
 
-  const element =
-    $(elementId);
+  const container =
+    side === "you"
+      ? $("youItems")
+      : $("themItems");
 
-
-  if (!element) {
-    return;
-  }
+  if (!container) return;
 
 
-  if (
-    !trade.length
-  ) {
+  if (!trade.length) {
 
-    element.innerHTML = `
+    container.innerHTML = `
+      <div class="empty-trade">
 
-      <div class="empty-items trade-empty">
-
-        <span class="empty-plus">
-          ＋
-        </span>
+        <div class="empty-icon">＋</div>
 
         <strong>
-          Henüz pet eklenmedi
+          Item ekle
         </strong>
 
-        <small>
-
+        <span>
           ${
-            side ===
-            "you"
-
-              ? "Teklifini oluşturmak için pet ekle"
-
-              : "Karşı tarafın teklifini oluştur"
-
+            side === "you"
+              ? "Teklifini oluşturmak için pet veya eşya seç."
+              : "Karşı tarafın teklifini oluştur."
           }
-
-        </small>
+        </span>
 
       </div>
-
     `;
 
     return;
@@ -2728,876 +1598,228 @@ function renderTradeSide(
   }
 
 
-  element.innerHTML =
-    trade.map(
-      pet => {
-
-        const badges = [];
-
-
-        if (
-          pet.form ===
-          "neon" &&
-          !isEgg(pet)
-        ) {
-
-          badges.push(`
-
-            <span class="trade-slot-badge neon">
-              N
-            </span>
-
-          `);
-
-        }
-
-
-        if (
-          pet.form ===
-          "mega" &&
-          !isEgg(pet)
-        ) {
-
-          badges.push(`
-
-            <span class="trade-slot-badge mega">
-              M
-            </span>
-
-          `);
-
-        }
-
-
-        if (
-          pet.fly &&
-          !isEgg(pet)
-        ) {
-
-          badges.push(`
-
-            <span class="trade-slot-badge fly">
-              F
-            </span>
-
-          `);
-
-        }
-
-
-        if (
-          pet.ride &&
-          !isEgg(pet)
-        ) {
-
-          badges.push(`
-
-            <span class="trade-slot-badge ride">
-              R
-            </span>
-
-          `);
-
-        }
-
-
-        return `
-
-          <div
-
-            class="trade-slot"
-
-            data-trade-id="${escapeHTML(
-              pet.uniqueId
-            )}"
-
-          >
-
-            <div class="trade-slot-image">
-
-              ${
-                pet.form ===
-                  "neon" &&
-                !isEgg(pet)
-
-                  ? `<div class="neon-effect"></div>`
-
-                  : ""
-              }
-
-
-              ${
-                pet.form ===
-                  "mega" &&
-                !isEgg(pet)
-
-                  ? `<div class="mega-effect"></div>`
-
-                  : ""
-              }
-
-
-              ${imageHTML(
-                pet,
-                "trade-slot-photo"
-              )}
-
-
-              <div class="trade-slot-badges">
-
-                ${badges.join("")}
-
-              </div>
-
-            </div>
-
-
-            <div
-
-              class="trade-slot-name"
-
-              title="${escapeHTML(
-                pet.name
-              )}"
-
-            >
-
-              ${escapeHTML(
-                pet.name
-              )}
-
-            </div>
-
-
-            <div class="trade-slot-value">
-
-              ${formatValue(
-                pet.value
-              )}
-
-            </div>
-
-
-            <button
-
-              type="button"
-
-              class="remove-item"
-
-              data-side="${side}"
-
-              data-id="${escapeHTML(
-                pet.uniqueId
-              )}"
-
-              aria-label="Pet sil"
-
-            >
-
-              ×
-
-            </button>
-
-          </div>
-
-        `;
-
-      }
-    )
-    .join("");
+  container.innerHTML =
+    trade
+      .map(item =>
+        tradeItemHTML(
+          item,
+          side
+        )
+      )
+      .join("");
 
 }
 
-
-/* =========================================================
-   REMOVE
-========================================================= */
-
-function removeTradePet(
-  side,
-  uniqueId
-) {
-
-  if (
-    side ===
-    "you"
-  ) {
-
-    youTrade =
-      youTrade.filter(
-        pet =>
-          pet.uniqueId !==
-          uniqueId
-      );
-
-  }
-
-
-  else if (
-    side ===
-    "them"
-  ) {
-
-    themTrade =
-      themTrade.filter(
-        pet =>
-          pet.uniqueId !==
-          uniqueId
-      );
-
-  }
-
-
-  recordedTradeKey =
-    "";
-
-
-  updateTradeUI();
-
-}
-
-
-/* =========================================================
-   CLEAR
-========================================================= */
-
-function clearTrade() {
-
-  youTrade =
-    [];
-
-  themTrade =
-    [];
-
-  recordedTradeKey =
-    "";
-
-
-  updateTradeUI();
-
-}
-
-
-/* =========================================================
-   TRADE UI
-========================================================= */
 
 function updateTradeUI() {
 
-  renderTradeSide(
-    "youItems",
-    youTrade,
-    "you"
-  );
-
-
-  renderTradeSide(
-    "themItems",
-    themTrade,
-    "them"
-  );
+  renderTradeSide("you");
+  renderTradeSide("them");
 
 
   const youTotal =
-    calculateTotal(
-      youTrade
-    );
-
+    calculateTotal(youTrade);
 
   const themTotal =
-    calculateTotal(
-      themTrade
-    );
+    calculateTotal(themTrade);
 
 
-  if (
+  if ($("youTotal")) {
+
     $("youTotal")
-  ) {
-
-    $("youTotal").textContent =
-      formatValue(
-        youTotal
-      );
+      .textContent =
+      formatValue(youTotal);
 
   }
 
+  if ($("themTotal")) {
 
-  if (
     $("themTotal")
-  ) {
-
-    $("themTotal").textContent =
-      formatValue(
-        themTotal
-      );
+      .textContent =
+      formatValue(themTotal);
 
   }
 
 
-  updateResult();
+  updateResult(
+    youTotal,
+    themTotal
+  );
+
+
+  renderProfile();
 
 }
 
 
 /* =========================================================
-   WFL RESULT
+   W / F / L
 ========================================================= */
 
-function updateResult() {
+function updateResult(you, them) {
 
-  const resultCard =
+  const card =
     $("resultCard");
 
+  const title =
+    $("resultTitle");
 
-  const resultText =
-    $("resultStatusText");
-
-
-  const resultHint =
-    $("resultHint");
-
-
-  const diffNumber =
-    $("resultDiffNumber");
-
-
-  const diffDisplay =
-    $("resultDiffDisplay");
-
-
-  const statusBar =
-    $("tradeStatusBar");
-
-
-  const statusLabel =
-    $("tradeStatusLabel");
-
-
-  const youTotal =
-    calculateTotal(
-      youTrade
-    );
-
-
-  const themTotal =
-    calculateTotal(
-      themTrade
-    );
-
-
-  if (
-    !youTrade.length ||
-    !themTrade.length
-  ) {
-
-    if (
-      resultText
-    ) {
-
-      resultText.textContent =
-        "Pet ekleyerek başla";
-
-    }
-
-
-    if (
-      resultHint
-    ) {
-
-      resultHint.textContent =
-        "İki tarafa da pet eklediğinde avantajı burada göreceksin.";
-
-    }
-
-
-    if (
-      diffNumber
-    ) {
-
-      diffNumber.textContent =
-        "—";
-
-    }
-
-
-    if (
-      diffDisplay
-    ) {
-
-      diffDisplay.textContent =
-        "—";
-
-    }
-
-
-    if (
-      statusLabel
-    ) {
-
-      statusLabel.textContent =
-        "TRADE HAZIR";
-
-    }
-
-
-    if (
-      resultCard
-    ) {
-
-      resultCard.className =
-        "result-card trade-result-card";
-
-    }
-
-
-    if (
-      statusBar
-    ) {
-
-      statusBar.className =
-        "trade-status-bar";
-
-    }
-
-
-    return;
-
-  }
-
+  const text =
+    $("resultText");
 
   const difference =
-    themTotal -
-    youTotal;
+    $("resultDifference");
 
-
-  const percent =
-    youTotal > 0
-
-      ? (
-          difference /
-          youTotal
-        ) * 100
-
-      : 0;
-
-
-  const roundedPercent =
-    Math.round(
-      percent * 10
-    ) / 10;
-
-
-  let diffText =
-    "0%";
+  const icon =
+    $("resultIcon");
 
 
   if (
-    roundedPercent > 0
+    !card ||
+    !title ||
+    !text ||
+    !difference
   ) {
-
-    diffText =
-      `+${roundedPercent.toFixed(
-        1
-      )}%`;
-
+    return;
   }
 
 
-  else if (
-    roundedPercent < 0
-  ) {
-
-    diffText =
-      `${roundedPercent.toFixed(
-        1
-      )}%`;
-
-  }
-
-
-  if (
-    diffNumber
-  ) {
-
-    diffNumber.textContent =
-      diffText;
-
-  }
-
-
-  if (
-    diffDisplay
-  ) {
-
-    diffDisplay.textContent =
-      diffText;
-
-  }
-
-
-  let status =
-    "FAIR";
-
-
-  let title =
-    "Adil Takas";
-
-
-  let hint =
-    "İki tarafın verdiği değerler neredeyse eşit.";
-
-
-  let resultClass =
-    "fair";
-
-
-  let statusClass =
-    "fair";
-
-
-  if (
-    Math.abs(
-      percent
-    ) <= 3
-  ) {
-
-    status =
-      "FAIR";
-
-    title =
-      "Adil Takas";
-
-    hint =
-      "İki tarafın verdiği değerler neredeyse eşit.";
-
-    resultClass =
-      "fair";
-
-    statusClass =
-      "fair";
-
-  }
-
-
-  else if (
-    percent > 0
-  ) {
-
-    if (
-      percent >= 10
-    ) {
-
-      status =
-        "BIG WIN";
-
-      title =
-        "Büyük Win!";
-
-      hint =
-        "Karşı taraf belirgin şekilde daha fazla değer veriyor.";
-
-      resultClass =
-        "big-win";
-
-      statusClass =
-        "big-win";
-
-    }
-
-    else {
-
-      status =
-        "SMALL WIN";
-
-      title =
-        "Küçük Win";
-
-      hint =
-        "Karşı taraf biraz daha fazla değer veriyor.";
-
-      resultClass =
-        "small-win";
-
-      statusClass =
-        "small-win";
-
-    }
-
-  }
-
-
-  else {
-
-    if (
-      Math.abs(
-        percent
-      ) >= 10
-    ) {
-
-      status =
-        "BIG LOSE";
-
-      title =
-        "Büyük Lose";
-
-      hint =
-        "Sen belirgin şekilde daha fazla değer veriyorsun.";
-
-      resultClass =
-        "big-lose";
-
-      statusClass =
-        "big-lose";
-
-    }
-
-    else {
-
-      status =
-        "SMALL LOSE";
-
-      title =
-        "Küçük Lose";
-
-      hint =
-        "Sen biraz daha fazla değer veriyorsun.";
-
-      resultClass =
-        "small-lose";
-
-      statusClass =
-        "small-lose";
-
-    }
-
-  }
-
-
-  if (
-    resultText
-  ) {
-
-    resultText.textContent =
-      title;
-
-  }
-
-
-  if (
-    resultHint
-  ) {
-
-    resultHint.textContent =
-      hint;
-
-  }
-
-
-  if (
-    statusLabel
-  ) {
-
-    statusLabel.textContent =
-      status;
-
-  }
-
-
-  if (
-    resultCard
-  ) {
-
-    resultCard.className =
-      `result-card trade-result-card ${resultClass}`;
-
-  }
-
-
-  if (
-    statusBar
-  ) {
-
-    statusBar.className =
-      `trade-status-bar ${statusClass}`;
-
-  }
-
-
-  recordTradeResult(
-    status
+  card.classList.remove(
+    "fair",
+    "small-win",
+    "big-win",
+    "small-lose",
+    "big-lose"
   );
 
-}
+
+  if (you === 0 && them === 0) {
+
+    title.textContent =
+      "Pet ekleyerek başla";
+
+    text.textContent =
+      "İki tarafa da item eklediğinde trade sonucu burada görünecek.";
+
+    difference.textContent = "—";
+
+    if (icon) {
+      icon.textContent = "⚖️";
+    }
+
+    return;
+
+  }
 
 
-/* =========================================================
-   RECORD RESULT
-========================================================= */
+  if (you === 0 || them === 0) {
 
-function recordTradeResult(
-  status
-) {
+    title.textContent =
+      "Teklif eksik";
 
-  const youTotal =
-    calculateTotal(
-      youTrade
+    text.textContent =
+      "Sağlıklı bir W/F/L sonucu için iki tarafa da item ekle.";
+
+    difference.textContent =
+      "—";
+
+    if (icon) {
+      icon.textContent = "➕";
+    }
+
+    return;
+
+  }
+
+
+  const diff =
+    you - them;
+
+  const max =
+    Math.max(
+      you,
+      them
     );
 
-
-  if (
-    !youTrade.length ||
-    !themTrade.length ||
-    youTotal <= 0
-  ) {
-
-    return;
-
-  }
+  const percentage =
+    Math.abs(diff) / max;
 
 
-  const key =
-    JSON.stringify({
+  if (percentage <= .05) {
 
-      you:
-        youTrade.map(
-          pet => ({
+    card.classList.add("fair");
 
-            id:
-              pet.uniqueId,
+    title.textContent =
+      "FAIR";
 
-            value:
-              pet.value
+    text.textContent =
+      "İki tarafın teklif değeri birbirine çok yakın.";
 
-          })
-        ),
+    difference.textContent =
+      `Fark: ${formatValue(Math.abs(diff))}`;
 
+    if (icon) {
+      icon.textContent = "⚖️";
+    }
 
-      them:
-        themTrade.map(
-          pet => ({
-
-            id:
-              pet.uniqueId,
-
-            value:
-              pet.value
-
-          })
-        ),
-
-
-      status
-
-    });
-
-
-  if (
-    recordedTradeKey ===
-    key
-  ) {
+    recordTradeResult("fair");
 
     return;
 
   }
 
 
-  recordedTradeKey =
-    key;
+  if (you > them) {
 
+    const status =
+      percentage <= .15
+        ? "small-win"
+        : "big-win";
 
-  const stats =
-    getTradeStats();
+    card.classList.add(status);
 
+    title.textContent =
+      percentage <= .15
+        ? "SMALL WIN"
+        : "BIG WIN";
 
-  if (
-    status ===
-      "BIG WIN" ||
-    status ===
-      "SMALL WIN"
-  ) {
+    text.textContent =
+      "Senin verdiğin teklif daha yüksek değere sahip.";
 
-    stats.wins++;
+    difference.textContent =
+      `+${formatValue(diff)} değer`;
 
-  }
+    if (icon) {
+      icon.textContent = "📈";
+    }
 
-  else if (
-    status ===
-    "FAIR"
-  ) {
+    recordTradeResult("win");
 
-    stats.fair++;
+  } else {
 
-  }
+    const status =
+      percentage <= .15
+        ? "small-lose"
+        : "big-lose";
 
-  else {
+    card.classList.add(status);
 
-    stats.loses++;
+    title.textContent =
+      percentage <= .15
+        ? "SMALL LOSE"
+        : "BIG LOSE";
 
-  }
+    text.textContent =
+      "Karşı tarafın verdiği teklif daha yüksek değere sahip.";
 
+    difference.textContent =
+      `-${formatValue(Math.abs(diff))} değer`;
 
-  saveTradeStats(
-    stats
-  );
+    if (icon) {
+      icon.textContent = "📉";
+    }
 
-
-  updateProfileStats();
-
-}
-
-
-/* =========================================================
-   PROFILE STATS
-========================================================= */
-
-function updateProfileStats() {
-
-  const stats =
-    getTradeStats();
-
-
-  const total =
-    stats.wins +
-    stats.fair +
-    stats.loses;
-
-
-  if (
-    $("profileWins")
-  ) {
-
-    $("profileWins").textContent =
-      stats.wins;
-
-  }
-
-
-  if (
-    $("profileFair")
-  ) {
-
-    $("profileFair").textContent =
-      stats.fair;
-
-  }
-
-
-  if (
-    $("profileLoses")
-  ) {
-
-    $("profileLoses").textContent =
-      stats.loses;
-
-  }
-
-
-  if (
-    $("profileTrades")
-  ) {
-
-    $("profileTrades").textContent =
-      total;
+    recordTradeResult("lose");
 
   }
 
@@ -3608,1231 +1830,606 @@ function updateProfileStats() {
    PROFILE
 ========================================================= */
 
-function renderProfile() {
+const DEFAULT_PROFILE = {
 
-  const profile =
-    getProfileData();
+  name: "ZAYAXRA Kullanıcısı",
+  username: "@kullanici",
+  avatar: "🐉",
+
+  trades: 0,
+  wins: 0,
+  fair: 0,
+  losses: 0
+
+};
 
 
-  $("profileModal")
-    ?.querySelectorAll(
-      ".profile-eyebrow"
-    )
-    .forEach(
-      element => {
+let profile = loadProfile();
 
-        element.textContent =
-          "PROFILE";
 
-      }
+function loadProfile() {
+
+  try {
+
+    const saved =
+      localStorage.getItem(
+        "zayaxra_profile"
+      );
+
+    if (saved) {
+
+      return {
+        ...DEFAULT_PROFILE,
+        ...JSON.parse(saved)
+      };
+
+    }
+
+
+    const old =
+      localStorage.getItem(
+        "zayagg_profile"
+      );
+
+    if (old) {
+
+      const migrated =
+        {
+          ...DEFAULT_PROFILE,
+          ...JSON.parse(old)
+        };
+
+      localStorage.setItem(
+        "zayaxra_profile",
+        JSON.stringify(migrated)
+      );
+
+      return migrated;
+
+    }
+
+  } catch (error) {
+
+    console.warn(
+      "Profil okunamadı:",
+      error
     );
 
-
-  if (
-    $("profileName")
-  ) {
-
-    $("profileName").textContent =
-      profile.name;
-
   }
 
-
-  if (
-    $("profileUsername")
-  ) {
-
-    $("profileUsername").textContent =
-      profile.username;
-
-  }
-
-
-  if (
-    $("profileBio")
-  ) {
-
-    $("profileBio").textContent =
-      profile.bio;
-
-  }
-
-
-  if (
-    $("profileAvatar")
-  ) {
-
-    $("profileAvatar").textContent =
-      profile.avatar;
-
-  }
-
-
-  if (
-    $("editName")
-  ) {
-
-    $("editName").value =
-      profile.name;
-
-  }
-
-
-  if (
-    $("editUsername")
-  ) {
-
-    $("editUsername").value =
-      profile.username;
-
-  }
-
-
-  if (
-    $("editBio")
-  ) {
-
-    $("editBio").value =
-      profile.bio;
-
-  }
-
-
-  selectedAvatar =
-    profile.avatar;
-
-
-  renderAvatarPicker();
-
-  updateProfileStats();
+  return {
+    ...DEFAULT_PROFILE
+  };
 
 }
 
 
-/* =========================================================
-   OPEN PROFILE
-========================================================= */
+function saveProfile() {
+
+  localStorage.setItem(
+    "zayaxra_profile",
+    JSON.stringify(profile)
+  );
+
+}
+
+
+function renderProfile() {
+
+  if ($("profileAvatar")) {
+
+    $("profileAvatar")
+      .textContent =
+      profile.avatar;
+
+  }
+
+  if ($("navAvatar")) {
+
+    $("navAvatar")
+      .textContent =
+      profile.avatar;
+
+  }
+
+  if ($("profileName")) {
+
+    $("profileName")
+      .textContent =
+      profile.name;
+
+  }
+
+  if ($("profileUsername")) {
+
+    $("profileUsername")
+      .textContent =
+      profile.username;
+
+  }
+
+  if ($("profileTrades")) {
+
+    $("profileTrades")
+      .textContent =
+      profile.trades;
+
+  }
+
+  if ($("profileWins")) {
+
+    $("profileWins")
+      .textContent =
+      profile.wins;
+
+  }
+
+  if ($("profileFair")) {
+
+    $("profileFair")
+      .textContent =
+      profile.fair;
+
+  }
+
+  if ($("profileLosses")) {
+
+    $("profileLosses")
+      .textContent =
+      profile.losses;
+
+  }
+
+
+  if ($("youTradeAvatar")) {
+
+    $("youTradeAvatar")
+      .textContent =
+      profile.avatar;
+
+  }
+
+  if ($("youTradeName")) {
+
+    $("youTradeName")
+      .textContent =
+      profile.name;
+
+  }
+
+}
+
 
 function openProfile() {
 
   const modal =
     $("profileModal");
 
-
-  if (
-    !modal
-  ) {
-
-    return;
-
-  }
-
+  if (!modal) return;
 
   renderProfile();
 
+  $("profileView").style.display =
+    "block";
 
-  modal.classList.add(
-    "show",
-    "active"
-  );
+  $("editProfile").style.display =
+    "none";
 
+  modal.classList.add("open");
 
-  modal.setAttribute(
-    "aria-hidden",
-    "false"
-  );
-
-
-  document.body.classList.add(
-    "modal-open"
-  );
+  document.body.style.overflow =
+    "hidden";
 
 }
 
-
-/* =========================================================
-   CLOSE PROFILE
-========================================================= */
 
 function closeProfile() {
 
   const modal =
     $("profileModal");
 
-
-  if (
-    !modal
-  ) {
-
-    return;
-
+  if (modal) {
+    modal.classList.remove("open");
   }
 
-
-  modal.classList.remove(
-    "show",
-    "active"
-  );
-
-
-  modal.setAttribute(
-    "aria-hidden",
-    "true"
-  );
-
-
-  document.body.classList.remove(
-    "modal-open"
-  );
+  document.body.style.overflow =
+    "";
 
 }
 
 
-/* =========================================================
-   EDIT PROFILE
-========================================================= */
-
 function openEditProfile() {
 
-  renderProfile();
+  if (!$("editProfile")) return;
+
+  $("profileView").style.display =
+    "none";
+
+  $("editProfile").style.display =
+    "block";
 
 
-  $("profileEditForm")
-    ?.classList.remove(
-      "hidden"
-    );
+  if ($("editProfileName")) {
+
+    $("editProfileName").value =
+      profile.name;
+
+  }
+
+  if ($("editProfileUsername")) {
+
+    $("editProfileUsername").value =
+      profile.username;
+
+  }
 
 
-  $("profileEditBtn")
-    ?.classList.add(
-      "hidden"
-    );
+  currentAvatar =
+    profile.avatar;
+
+  updateAvatarButtons();
 
 }
 
 
 function closeEditProfile() {
 
-  $("profileEditForm")
-    ?.classList.add(
-      "hidden"
-    );
+  if ($("editProfile")) {
+
+    $("editProfile").style.display =
+      "none";
+
+  }
+
+  if ($("profileView")) {
+
+    $("profileView").style.display =
+      "block";
+
+  }
+
+}
 
 
-  $("profileEditBtn")
-    ?.classList.remove(
-      "hidden"
+function selectAvatar(avatar) {
+
+  currentAvatar = avatar;
+
+  updateAvatarButtons();
+
+}
+
+
+function updateAvatarButtons() {
+
+  document
+    .querySelectorAll(
+      "#avatarPicker button"
+    )
+    .forEach(button => {
+
+      button.classList.toggle(
+        "active",
+        button.textContent.trim() ===
+        currentAvatar
+      );
+
+    });
+
+}
+
+
+function saveEditedProfile() {
+
+  const name =
+    $("editProfileName")?.value
+      .trim();
+
+  let username =
+    $("editProfileUsername")?.value
+      .trim();
+
+
+  if (!name) {
+
+    showToast(
+      "⚠️",
+      "İsim boş bırakılamaz."
     );
+
+    return;
+
+  }
+
+
+  if (!username) {
+    username = "@kullanici";
+  }
+
+  if (!username.startsWith("@")) {
+    username = "@" + username;
+  }
+
+
+  profile.name =
+    name.substring(0, 30);
+
+  profile.username =
+    username.substring(0, 26);
+
+  profile.avatar =
+    currentAvatar;
+
+
+  saveProfile();
+  renderProfile();
+  closeEditProfile();
+
+  showToast(
+    "✓",
+    "Profil güncellendi."
+  );
 
 }
 
 
 /* =========================================================
-   AVATAR
+   TRADE STATS
 ========================================================= */
 
-function renderAvatarPicker() {
+function recordTradeResult(status) {
 
-  const box =
-    $("avatarPick");
-
-
-  if (!box) {
+  if (
+    tradeSessionRecorded ||
+    !youTrade.length ||
+    !themTrade.length
+  ) {
     return;
   }
 
+  tradeSessionRecorded = true;
 
-  const avatars = [
+  profile.trades++;
 
-    "🐉",
-    "🐲",
-    "🦊",
-    "🐺",
-    "🦁",
-    "🐯",
-    "🦄",
-    "🐸",
-    "🐼",
-    "🐵",
-    "🐨",
-    "🐰"
+  if (status === "win") {
+    profile.wins++;
+  }
 
-  ];
+  if (status === "fair") {
+    profile.fair++;
+  }
 
+  if (status === "lose") {
+    profile.losses++;
+  }
 
-  box.innerHTML =
-    avatars
-      .map(
-        avatar => `
-
-          <button
-
-            type="button"
-
-            class="avatar-opt ${
-              selectedAvatar ===
-              avatar
-                ? "active"
-                : ""
-            }"
-
-            data-avatar="${avatar}"
-
-          >
-
-            ${avatar}
-
-          </button>
-
-        `
-      )
-      .join("");
-
-
-  box
-    .querySelectorAll(
-      ".avatar-opt"
-    )
-    .forEach(
-      button => {
-
-        button.addEventListener(
-          "click",
-          () => {
-
-            selectedAvatar =
-              button.dataset.avatar ||
-              "🐉";
-
-
-            box
-              .querySelectorAll(
-                ".avatar-opt"
-              )
-              .forEach(
-                item => {
-
-                  item.classList.remove(
-                    "active"
-                  );
-
-                }
-              );
-
-
-            button.classList.add(
-              "active"
-            );
-
-          }
-        );
-
-      }
-    );
+  saveProfile();
+  renderProfile();
 
 }
 
 
 /* =========================================================
-   SAVE PROFILE
+   PAGE NAVIGATION
 ========================================================= */
 
-function saveEditedProfile(
-  event
-) {
+function showSection(sectionId) {
 
-  event.preventDefault();
+  document
+    .querySelectorAll(".page-section")
+    .forEach(section => {
 
+      section.classList.toggle(
+        "active",
+        section.id === sectionId
+      );
 
-  const name =
-    $("editName")
-      ?.value
-      .trim() ||
-
-    "Zayaxra Kullanıcısı";
-
-
-  let username =
-    $("editUsername")
-      ?.value
-      .trim() ||
-
-    "@kullanici";
+    });
 
 
-  if (
-    !username.startsWith(
-      "@"
-    )
-  ) {
+  document
+    .querySelectorAll(".nav-links a")
+    .forEach(link => {
 
-    username =
-      "@" +
-      username;
+      link.classList.toggle(
+        "active",
+        link.dataset.section === sectionId
+      );
 
+    });
+
+
+  const menu =
+    $("mobileMenu");
+
+  if (menu) {
+    menu.classList.remove("open");
   }
 
 
-  const bio =
-    $("editBio")
-      ?.value
-      .trim() ||
-
-    "Henüz bir biyografi eklenmedi.";
-
-
-  saveProfileData({
-
-    name,
-
-    username,
-
-    bio,
-
-    avatar:
-      selectedAvatar ||
-      "🐉"
-
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
   });
-
-
-  renderProfile();
-
-  closeEditProfile();
 
 }
 
-
-/* =========================================================
-   MOBILE MENU
-========================================================= */
 
 function toggleMenu() {
 
-  document.body.classList.toggle(
-    "menu-open"
-  );
+  const menu =
+    $("mobileMenu");
 
+  if (!menu) return;
 
-  const button =
-    $("menuButton");
-
-
-  if (
-    button
-  ) {
-
-    button.setAttribute(
-
-      "aria-expanded",
-
-      document.body.classList.contains(
-        "menu-open"
-      )
-        ? "true"
-        : "false"
-
-    );
-
-  }
-
-}
-
-
-function closeMenu() {
-
-  document.body.classList.remove(
-    "menu-open"
-  );
+  menu.classList.toggle("open");
 
 }
 
 
 /* =========================================================
-   NAVIGATION
+   TOAST
 ========================================================= */
 
-function scrollToSection(
-  id
-) {
-
-  const element =
-    $(id);
+let toastTimer = null;
 
 
-  if (
-    !element
-  ) {
+function showToast(icon, text) {
 
-    return;
+  const toast =
+    $("toast");
 
-  }
+  if (!toast) return;
 
+  $("toastIcon").textContent =
+    icon;
 
-  element.scrollIntoView({
+  $("toastText").textContent =
+    text;
 
-    behavior:
-      "smooth",
-
-    block:
-      "start"
-
-  });
+  toast.classList.add("show");
 
 
-  closeMenu();
+  clearTimeout(toastTimer);
+
+  toastTimer =
+    setTimeout(() => {
+
+      toast.classList.remove("show");
+
+    }, 2200);
 
 }
 
 
-function initNavigation() {
+/* =========================================================
+   EVENTS
+========================================================= */
 
-  document
-    .querySelectorAll(
-      "[data-scroll]"
-    )
-    .forEach(
-      link => {
+document.addEventListener(
+  "DOMContentLoaded",
+  () => {
 
-        link.addEventListener(
-          "click",
-          event => {
+    renderProfile();
 
-            event.preventDefault();
+    showSection("home");
 
-
-            const target =
-              link.dataset.scroll;
+    loadDatabase();
 
 
-            if (
-              target ===
-              "top"
-            ) {
+    const search =
+      $("search");
 
-              window.scrollTo({
+    if (search) {
 
-                top:
-                  0,
+      search.addEventListener(
+        "input",
+        applyValueFilters
+      );
 
-                behavior:
-                  "smooth"
-
-              });
+    }
 
 
-              closeMenu();
+    const sort =
+      $("sortSelect");
+
+    if (sort) {
+
+      sort.addEventListener(
+        "change",
+        applyValueFilters
+      );
+
+    }
 
 
-              return;
+    const rarity =
+      $("rarityFilter");
 
-            }
+    if (rarity) {
+
+      rarity.addEventListener(
+        "change",
+        applyValueFilters
+      );
+
+    }
 
 
-            scrollToSection(
-              target
-            );
+    const pickerSearch =
+      $("pickerSearch");
+
+    if (pickerSearch) {
+
+      pickerSearch.addEventListener(
+        "input",
+        renderPicker
+      );
+
+    }
+
+
+    const pickerModal =
+      $("petPickerModal");
+
+    if (pickerModal) {
+
+      pickerModal.addEventListener(
+        "click",
+        event => {
+
+          if (
+            event.target ===
+            pickerModal
+          ) {
+
+            closePetPicker();
 
           }
-        );
 
-      }
-    );
-
-
-  document
-    .querySelector(
-      ".logo"
-    )
-    ?.addEventListener(
-      "click",
-      event => {
-
-        event.preventDefault();
-
-
-        window.scrollTo({
-
-          top:
-            0,
-
-          behavior:
-            "smooth"
-
-        });
-
-
-        closeMenu();
-
-      }
-    );
-
-}
-
-
-/* =========================================================
-   NAVBAR
-========================================================= */
-
-function initNavbar() {
-
-  const navbar =
-    document.querySelector(
-      ".navbar"
-    );
-
-
-  if (
-    !navbar
-  ) {
-
-    return;
-
-  }
-
-
-  const update =
-    () => {
-
-      navbar.classList.toggle(
-
-        "scrolled",
-
-        window.scrollY >
-          30
-
-      );
-
-    };
-
-
-  update();
-
-
-  window.addEventListener(
-
-    "scroll",
-
-    update,
-
-    {
-      passive:
-        true
-    }
-
-  );
-
-}
-
-
-/* =========================================================
-   MAIN SEARCH
-========================================================= */
-
-function initSearch() {
-
-  const search =
-    $("search");
-
-
-  if (
-    !search
-  ) {
-
-    return;
-
-  }
-
-
-  if (
-    typeof renderValues ===
-    "function"
-  ) {
-
-    search.addEventListener(
-      "input",
-      renderValues
-    );
-
-  }
-
-}
-
-
-/* =========================================================
-   PICKER SEARCH
-========================================================= */
-
-function initPickerSearch() {
-
-  const search =
-    $("petSearch");
-
-
-  if (
-    !search
-  ) {
-
-    return;
-
-  }
-
-
-  search.addEventListener(
-    "input",
-    filterPickerPets
-  );
-
-}
-
-
-/* =========================================================
-   REMOVE EVENT
-========================================================= */
-
-function initRemoveTradeEvents() {
-
-  document.addEventListener(
-
-    "click",
-
-    event => {
-
-      const button =
-        event.target.closest(
-          ".remove-item"
-        );
-
-
-      if (
-        !button
-      ) {
-
-        return;
-
-      }
-
-
-      event.preventDefault();
-
-      event.stopPropagation();
-
-
-      removeTradePet(
-
-        button.dataset.side,
-
-        button.dataset.id
-
+        }
       );
 
     }
 
-  );
 
-}
+    const profileModal =
+      $("profileModal");
+
+    if (profileModal) {
+
+      profileModal.addEventListener(
+        "click",
+        event => {
+
+          if (
+            event.target ===
+            profileModal
+          ) {
+
+            closeProfile();
+
+          }
+
+        }
+      );
+
+    }
 
 
-/* =========================================================
-   CLEAR EVENT
-========================================================= */
-
-function initClearTrade() {
-
-  $("clearBtn")
-    ?.addEventListener(
-
-      "click",
-
+    document.addEventListener(
+      "keydown",
       event => {
 
-        event.preventDefault();
-
-        clearTrade();
-
-      }
-
-    );
-
-}
-
-
-/* =========================================================
-   MODAL EVENTS
-========================================================= */
-
-function initModalEvents() {
-
-  const picker =
-    $("petPicker");
-
-
-  const profile =
-    $("profileModal");
-
-
-  const info =
-    $("infoModal");
-
-
-  picker?.addEventListener(
-
-    "click",
-
-    event => {
-
-      if (
-        event.target ===
-        picker
-      ) {
+        if (event.key !== "Escape") {
+          return;
+        }
 
         closePetPicker();
-
-      }
-
-    }
-
-  );
-
-
-  profile?.addEventListener(
-
-    "click",
-
-    event => {
-
-      if (
-        event.target ===
-        profile
-      ) {
-
         closeProfile();
 
       }
-
-    }
-
-  );
-
-
-  info?.addEventListener(
-
-    "click",
-
-    event => {
-
-      if (
-        event.target ===
-        info
-      ) {
-
-        closeInfo();
-
-      }
-
-    }
-
-  );
-
-}
-
-
-/* =========================================================
-   KEYBOARD
-========================================================= */
-
-function initKeyboard() {
-
-  document.addEventListener(
-
-    "keydown",
-
-    event => {
-
-      if (
-        event.key !==
-        "Escape"
-      ) {
-
-        return;
-
-      }
-
-
-      closePetPicker();
-
-      closeProfile();
-
-      closeInfo();
-
-      closeMenu();
-
-      closeEditProfile();
-
-    }
-
-  );
-
-}
-
-
-/* =========================================================
-   VISIBILITY
-========================================================= */
-
-function initVisibility() {
-
-  document.addEventListener(
-
-    "visibilitychange",
-
-    () => {
-
-      if (
-        document.visibilityState ===
-        "visible"
-      ) {
-
-        updateTradeUI();
-
-        updateProfileStats();
-
-      }
-
-    }
-
-  );
-
-}
-
-
-/* =========================================================
-   INFO PANEL
-========================================================= */
-
-function toggleZayaxraInfo() {
-
-  const button =
-    document.querySelector(
-      ".info-toggle"
-    );
-
-
-  const panel =
-    $("zayaxraInfoPanel");
-
-
-  if (
-    !button ||
-    !panel
-  ) {
-
-    return;
-
-  }
-
-
-  const isOpen =
-    panel.classList.toggle(
-      "open"
-    );
-
-
-  button.classList.toggle(
-    "active",
-    isOpen
-  );
-
-
-  button.setAttribute(
-
-    "aria-expanded",
-
-    isOpen
-      ? "true"
-      : "false"
-
-  );
-
-}
-
-
-/* =========================================================
-   INFO MODAL
-========================================================= */
-
-function openInfo(
-  event
-) {
-
-  event?.preventDefault();
-
-
-  const modal =
-    $("infoModal");
-
-
-  if (
-    !modal
-  ) {
-
-    return;
-
-  }
-
-
-  modal.classList.add(
-    "show",
-    "active"
-  );
-
-
-  modal.setAttribute(
-    "aria-hidden",
-    "false"
-  );
-
-
-  document.body.classList.add(
-    "modal-open"
-  );
-
-}
-
-
-function closeInfo() {
-
-  const modal =
-    $("infoModal");
-
-
-  if (
-    !modal
-  ) {
-
-    return;
-
-  }
-
-
-  modal.classList.remove(
-    "show",
-    "active"
-  );
-
-
-  modal.setAttribute(
-    "aria-hidden",
-    "true"
-  );
-
-
-  if (
-
-    !$("profileModal")
-      ?.classList.contains(
-        "active"
-      )
-
-    &&
-
-    !$("petPicker")
-      ?.classList.contains(
-        "active"
-      )
-
-  ) {
-
-    document.body.classList.remove(
-      "modal-open"
     );
 
   }
-
-}
-
-
-/* =========================================================
-   DATABASE CHECK
-========================================================= */
-
-function validateDatabase() {
-
-  console.log(
-
-    `ZAYAXRA: ${PET_DATABASE.length} kayıt hazır.`
-
-  );
-
-}
-
-
-/* =========================================================
-   INIT
-========================================================= */
-
-function initZayaxra() {
-
-  migrateLegacyProfile();
-
-  ensureStorageData();
-
-  validateDatabase();
-
-  updateProfileStats();
-
-  renderProfile();
-
-  updateTradeUI();
-
-  initSearch();
-
-  initPickerSearch();
-
-  initRemoveTradeEvents();
-
-  initClearTrade();
-
-  initNavigation();
-
-  initNavbar();
-
-  initModalEvents();
-
-  initKeyboard();
-
-  initVisibility();
-
-
-  console.log(
-    "ZAYAXRA başarıyla başlatıldı."
-  );
-
-
-  loadFullPetDatabase();
-
-}
-
-
-/* =========================================================
-   GLOBAL FUNCTIONS
-========================================================= */
-
-window.openPetPicker =
-  openPetPicker;
-
-window.closePetPicker =
-  closePetPicker;
-
-window.confirmAddPet =
-  confirmAddPet;
-
-window.toggleForm =
-  toggleForm;
-
-window.togglePotion =
-  togglePotion;
-
-window.openProfile =
-  openProfile;
-
-window.closeProfile =
-  closeProfile;
-
-window.openEditProfile =
-  openEditProfile;
-
-window.closeEditProfile =
-  closeEditProfile;
-
-window.saveEditedProfile =
-  saveEditedProfile;
-
-window.toggleMenu =
-  toggleMenu;
-
-window.closeMenu =
-  closeMenu;
-
-window.openInfo =
-  openInfo;
-
-window.closeInfo =
-  closeInfo;
-
-window.toggleZayaxraInfo =
-  toggleZayaxraInfo;
-
-
-/* =========================================================
-   START
-========================================================= */
-
-if (
-  document.readyState ===
-  "loading"
-) {
-
-  document.addEventListener(
-
-    "DOMContentLoaded",
-
-    initZayaxra,
-
-    {
-      once:
-        true
-    }
-
-  );
-
-}
-
-else {
-
-  initZayaxra();
-
-}
-
-
-/* =========================================================
-   ERROR HANDLERS
-========================================================= */
-
-window.addEventListener(
-
-  "error",
-
-  event => {
-
-    console.error(
-
-      "ZAYAXRA JavaScript hatası:",
-
-      event.error ||
-      event.message
-
-    );
-
-  }
-
-);
-
-
-window.addEventListener(
-
-  "unhandledrejection",
-
-  event => {
-
-    console.error(
-
-      "ZAYAXRA Promise hatası:",
-
-      event.reason
-
-    );
-
-  }
-
 );
