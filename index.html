@@ -1,170 +1,166 @@
-```html
 <!DOCTYPE html>
 <html lang="tr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>ZAYAXRA — Adopt Me Trade Calculator</title>
-
-  <meta
-    name="description"
-    content="ZAYAXRA Adopt Me trade value calculator."
-  >
+  <title>ZAYAXRA — Adopt Me Trading</title>
+  <meta name="description" content="ZAYAXRA Adopt Me değer ve W/F/L trade calculator">
 
   <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
 
-<!-- =========================================================
-     NAVBAR
-========================================================= -->
+<!-- ================= NAVBAR ================= -->
 
 <header class="navbar">
+  <div class="nav-inner">
 
-  <div class="nav-container">
-
-    <a href="#" class="logo" data-scroll="top">
-      <span class="logo-mark">Z</span>
-      <span class="logo-text">ZAYAXRA</span>
+    <a href="#" class="brand" onclick="showSection('home'); return false;">
+      <span class="brand-logo">Z</span>
+      <span class="brand-name">ZAYAXRA</span>
     </a>
 
     <nav class="nav-links">
-
-      <a href="#calculator" data-scroll="calculator">
-        Trade Calculator
-      </a>
-
-      <a href="#values" data-scroll="values">
-        Values
-      </a>
-
-      <a href="#about" data-scroll="about">
-        About
-      </a>
-
+      <a href="#" data-section="home" onclick="showSection('home'); return false;">Ana Sayfa</a>
+      <a href="#" data-section="calculator" onclick="showSection('calculator'); return false;">W/F/L Calculator</a>
+      <a href="#" data-section="values" onclick="showSection('values'); return false;">Değerler</a>
     </nav>
 
-    <div class="nav-actions">
+    <button class="profile-button" onclick="openProfile()" type="button">
+      <span id="navAvatar">🐉</span>
+      <span>Profil</span>
+    </button>
 
-      <button
-        class="profile-nav-btn"
-        type="button"
-        onclick="openProfile()"
-      >
-        <span>👤</span>
-        Profile
-      </button>
-
-      <button
-        id="menuButton"
-        class="menu-button"
-        type="button"
-        aria-expanded="false"
-        onclick="toggleMenu()"
-      >
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-
-    </div>
+    <button class="mobile-menu-btn" onclick="toggleMenu()" type="button">
+      ☰
+    </button>
 
   </div>
-
 </header>
 
+<!-- ================= MOBILE MENU ================= -->
 
-<!-- =========================================================
-     MOBILE MENU
-========================================================= -->
-
-<div class="mobile-menu">
-
-  <a href="#calculator" data-scroll="calculator">
-    ⚖️ Trade Calculator
-  </a>
-
-  <a href="#values" data-scroll="values">
-    💎 Values
-  </a>
-
-  <a href="#about" data-scroll="about">
-    ✨ About
-  </a>
-
-  <button type="button" onclick="openProfile()">
-    👤 Profile
-  </button>
-
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#" onclick="showSection('home'); return false;">Ana Sayfa</a>
+  <a href="#" onclick="showSection('calculator'); return false;">W/F/L Calculator</a>
+  <a href="#" onclick="showSection('values'); return false;">Değerler</a>
+  <button onclick="openProfile()" type="button">Profil</button>
 </div>
 
 
-<!-- =========================================================
-     HERO
-========================================================= -->
-
 <main>
 
-<section class="hero" id="top">
+<!-- ================= HOME ================= -->
 
-  <div class="hero-glow glow-one"></div>
-  <div class="hero-glow glow-two"></div>
+<section class="page-section home-section active" id="home">
 
-  <div class="hero-content">
+  <div class="hero">
 
-    <div class="hero-badge">
-      <span class="status-dot"></span>
-      ZAYAXRA TRADE SYSTEM
-    </div>
+    <div class="hero-glow glow-one"></div>
+    <div class="hero-glow glow-two"></div>
 
-    <h1>
-      Build the
-      <span>Perfect Trade.</span>
-    </h1>
+    <div class="hero-content">
 
-    <p class="hero-description">
-      Adopt Me petlerini ekle, değerlerini karşılaştır
-      ve takasının W/F/L durumunu saniyeler içinde öğren.
-    </p>
-
-    <div class="hero-buttons">
-
-      <button
-        class="primary-btn"
-        type="button"
-        onclick="scrollToSection('calculator')"
-      >
-        <span>⚡</span>
-        Trade Yap
-      </button>
-
-      <button
-        class="secondary-btn"
-        type="button"
-        onclick="scrollToSection('values')"
-      >
-        Pet Values
-      </button>
-
-    </div>
-
-    <div class="hero-stats">
-
-      <div class="hero-stat">
-        <strong id="heroPetCount">600+</strong>
-        <span>Pet & Egg</span>
+      <div class="hero-badge">
+        <span class="online-dot"></span>
+        ZAYAXRA ONLINE
       </div>
 
-      <div class="hero-stat">
-        <strong>W / F / L</strong>
-        <span>Calculator</span>
+      <h1>
+        Adopt Me<br>
+        <span>Trade Calculator</span>
+      </h1>
+
+      <p>
+        Petlerini ve eşyalarını seç, değerlerini karşılaştır
+        ve trade'inin <strong>Win / Fair / Lose</strong> olduğunu öğren.
+      </p>
+
+      <div class="hero-buttons">
+        <button class="primary-button" onclick="showSection('calculator')" type="button">
+          ⚖️ Trade Calculator
+        </button>
+
+        <button class="secondary-button" onclick="showSection('values')" type="button">
+          💎 Değerleri Gör
+        </button>
       </div>
 
-      <div class="hero-stat">
-        <strong>100%</strong>
-        <span>Free</span>
+      <div class="hero-stats">
+        <div>
+          <strong id="homeItemCount">0+</strong>
+          <span>Item</span>
+        </div>
+
+        <div>
+          <strong>W / F / L</strong>
+          <span>Calculator</span>
+        </div>
+
+        <div>
+          <strong>FREE</strong>
+          <span>Kullanım</span>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="hero-preview">
+
+      <div class="preview-window">
+
+        <div class="preview-top">
+          <span></span>
+          <span></span>
+          <span></span>
+          <label>ZAYAXRA TRADE</label>
+        </div>
+
+        <div class="preview-trade">
+
+          <div class="preview-side">
+            <div class="preview-title">SEN</div>
+
+            <div class="preview-pets">
+              <div class="preview-pet">
+                <span>🐉</span>
+                <small>Shadow</small>
+              </div>
+
+              <div class="preview-pet">
+                <span>🐢</span>
+                <small>Turtle</small>
+              </div>
+            </div>
+
+            <strong>137</strong>
+          </div>
+
+          <div class="preview-vs">VS</div>
+
+          <div class="preview-side">
+            <div class="preview-title">KARŞI TARAF</div>
+
+            <div class="preview-pets">
+              <div class="preview-pet">
+                <span>🦇</span>
+                <small>Bat</small>
+              </div>
+            </div>
+
+            <strong>110</strong>
+          </div>
+
+        </div>
+
+        <div class="preview-result">
+          <span>TRADE RESULT</span>
+          <strong>WIN</strong>
+          <small>+27 değer</small>
+        </div>
+
       </div>
 
     </div>
@@ -174,231 +170,148 @@
 </section>
 
 
-<!-- =========================================================
-     CALCULATOR
-========================================================= -->
+<!-- ================= CALCULATOR ================= -->
 
-<section class="calculator-section" id="calculator">
+<section class="page-section calculator-section" id="calculator">
 
-  <div class="section-heading">
+  <div class="section-header">
 
-    <div class="section-eyebrow">
-      TRADE CALCULATOR
+    <div>
+      <span class="section-kicker">TRADE CALCULATOR</span>
+      <h2>Trade'ini hesapla.</h2>
+      <p>İki tarafa da item ekle ve gerçek değer farkını gör.</p>
     </div>
 
-    <h2>
-      Takasını oluştur.
-    </h2>
-
-    <p>
-      İki tarafa da pet ekle ve gerçek zamanlı değer farkını gör.
-    </p>
+    <div class="live-status">
+      <span></span>
+      Sistem aktif
+    </div>
 
   </div>
 
 
-  <div class="calculator-shell">
+  <div class="trade-layout">
 
+    <!-- YOU -->
 
-    <!-- =====================================================
-         YOU
-    ====================================================== -->
+    <div class="trade-panel you-panel">
 
-    <div class="trade-column you-column">
+      <div class="trade-panel-header">
 
-      <div class="trade-column-header">
+        <div class="trader-info">
+          <div class="trader-avatar" id="youTradeAvatar">🐉</div>
 
-        <div>
-
-          <span class="trade-eyebrow">
-            YOUR OFFER
-          </span>
-
-          <h3>Sen</h3>
-
+          <div>
+            <span class="trader-label">YOUR OFFER</span>
+            <h3 id="youTradeName">ZAYAXRA Kullanıcısı</h3>
+          </div>
         </div>
 
         <div class="trade-total">
-
           <span>VALUE</span>
-
           <strong id="youTotal">0</strong>
-
         </div>
 
       </div>
 
 
-      <div
-        class="trade-items"
-        id="youItems"
-      >
+      <div class="trade-items" id="youItems">
 
-        <div class="empty-items trade-empty">
-
-          <span class="empty-plus">＋</span>
-
-          <strong>
-            Henüz pet eklenmedi
-          </strong>
-
-          <small>
-            Teklifini oluşturmak için pet ekle
-          </small>
-
+        <div class="empty-trade">
+          <div class="empty-icon">＋</div>
+          <strong>Item ekle</strong>
+          <span>Teklifini oluşturmak için pet veya eşya seç.</span>
         </div>
 
       </div>
 
 
-      <button
-        class="add-pet-btn"
-        type="button"
-        onclick="openPetPicker('you')"
-      >
-        <span>＋</span>
-        Pet Ekle
-      </button>
+      <div class="trade-panel-footer">
+
+        <button class="add-trade-button" onclick="openPetPicker('you')" type="button">
+          <span>＋</span>
+          Item Ekle
+        </button>
+
+        <button class="clear-trade-button" onclick="clearTrade('you')" type="button">
+          Temizle
+        </button>
+
+      </div>
 
     </div>
 
 
-    <!-- =====================================================
-         VS
-    ====================================================== -->
+    <!-- CENTER -->
 
-    <div class="trade-vs">
+    <div class="trade-center">
 
-      <div class="vs-line"></div>
+      <div class="vs-circle">VS</div>
 
-      <div class="vs-circle">
-        VS
-      </div>
+      <div class="result-card" id="resultCard">
 
-      <div class="vs-line"></div>
+        <span class="result-kicker">TRADE RESULT</span>
 
-    </div>
+        <div class="result-icon" id="resultIcon">⚖️</div>
 
+        <h3 id="resultTitle">Pet ekleyerek başla</h3>
 
-    <!-- =====================================================
-         THEM
-    ====================================================== -->
-
-    <div class="trade-column them-column">
-
-      <div class="trade-column-header">
-
-        <div>
-
-          <span class="trade-eyebrow">
-            THEIR OFFER
-          </span>
-
-          <h3>Karşı Taraf</h3>
-
-        </div>
-
-        <div class="trade-total">
-
-          <span>VALUE</span>
-
-          <strong id="themTotal">0</strong>
-
-        </div>
-
-      </div>
-
-
-      <div
-        class="trade-items"
-        id="themItems"
-      >
-
-        <div class="empty-items trade-empty">
-
-          <span class="empty-plus">＋</span>
-
-          <strong>
-            Henüz pet eklenmedi
-          </strong>
-
-          <small>
-            Karşı tarafın teklifini oluştur
-          </small>
-
-        </div>
-
-      </div>
-
-
-      <button
-        class="add-pet-btn"
-        type="button"
-        onclick="openPetPicker('them')"
-      >
-        <span>＋</span>
-        Pet Ekle
-      </button>
-
-    </div>
-
-  </div>
-
-
-  <!-- =======================================================
-       RESULT
-  ======================================================== -->
-
-  <div
-    id="resultCard"
-    class="result-card trade-result-card"
-  >
-
-    <div class="result-left">
-
-      <div class="result-icon">
-        ⚖️
-      </div>
-
-      <div>
-
-        <span class="result-eyebrow">
-          TRADE RESULT
-        </span>
-
-        <h3 id="resultStatusText">
-          Pet ekleyerek başla
-        </h3>
-
-        <p id="resultHint">
-          İki tarafa da pet eklediğinde avantajı burada göreceksin.
+        <p id="resultText">
+          İki tarafa da item eklediğinde trade sonucu burada görünecek.
         </p>
 
+        <div class="result-difference" id="resultDifference">—</div>
+
       </div>
 
     </div>
 
 
-    <div class="result-middle">
+    <!-- THEM -->
 
-      <span>VALUE DIFFERENCE</span>
+    <div class="trade-panel them-panel">
 
-      <strong id="resultDiffNumber">
-        —
-      </strong>
+      <div class="trade-panel-header">
 
-    </div>
+        <div class="trader-info">
+          <div class="trader-avatar opponent">👤</div>
+
+          <div>
+            <span class="trader-label">THEIR OFFER</span>
+            <h3>Karşı Taraf</h3>
+          </div>
+        </div>
+
+        <div class="trade-total">
+          <span>VALUE</span>
+          <strong id="themTotal">0</strong>
+        </div>
+
+      </div>
 
 
-    <div class="result-right">
+      <div class="trade-items" id="themItems">
 
-      <div
-        id="tradeStatusBar"
-        class="trade-status-bar"
-      >
-        <span id="tradeStatusLabel">
-          TRADE HAZIR
-        </span>
+        <div class="empty-trade">
+          <div class="empty-icon">＋</div>
+          <strong>Item ekle</strong>
+          <span>Karşı tarafın teklifini oluştur.</span>
+        </div>
+
+      </div>
+
+
+      <div class="trade-panel-footer">
+
+        <button class="add-trade-button" onclick="openPetPicker('them')" type="button">
+          <span>＋</span>
+          Item Ekle
+        </button>
+
+        <button class="clear-trade-button" onclick="clearTrade('them')" type="button">
+          Temizle
+        </button>
+
       </div>
 
     </div>
@@ -406,125 +319,145 @@
   </div>
 
 
-  <div class="calculator-actions">
+  <div class="calculator-info">
 
-    <button
-      id="clearBtn"
-      type="button"
-      class="clear-trade-btn"
-    >
-      🗑️ Takası Temizle
+    <div>
+      <span>⚡</span>
+      <div>
+        <strong>Anlık hesaplama</strong>
+        <small>Item ekledikçe değer otomatik hesaplanır.</small>
+      </div>
+    </div>
+
+    <div>
+      <span>✨</span>
+      <div>
+        <strong>Neon / Mega</strong>
+        <small>Pet formunu ve Fly / Ride durumunu seçebilirsin.</small>
+      </div>
+    </div>
+
+    <div>
+      <span>📊</span>
+      <div>
+        <strong>ZAYAXRA Value</strong>
+        <small>Tüm hesaplamalar ZAYAXRA değer sistemiyle yapılır.</small>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- ================= VALUES ================= -->
+
+<section class="page-section values-section" id="values">
+
+  <div class="section-header">
+
+    <div>
+      <span class="section-kicker">ITEM VALUES</span>
+      <h2>Pet ve eşya değerleri.</h2>
+      <p>Adopt Me itemlerini ara ve ZAYAXRA değerlerini gör.</p>
+    </div>
+
+    <div class="item-counter">
+      <strong id="itemCount">0</strong>
+      <span>ITEM</span>
+    </div>
+
+  </div>
+
+
+  <div class="value-controls">
+
+    <div class="search-box">
+      <span>🔎</span>
+      <input
+        id="search"
+        type="text"
+        placeholder="Pet veya eşya ara..."
+        autocomplete="off"
+      >
+      <button id="clearSearch" onclick="clearSearchInput()" type="button">×</button>
+    </div>
+
+    <select id="sortSelect">
+      <option value="value-desc">Değer: Yüksek → Düşük</option>
+      <option value="value-asc">Değer: Düşük → Yüksek</option>
+      <option value="name-asc">İsim: A → Z</option>
+      <option value="name-desc">İsim: Z → A</option>
+    </select>
+
+    <select id="rarityFilter">
+      <option value="all">Tüm Rarity</option>
+      <option value="common">Common</option>
+      <option value="uncommon">Uncommon</option>
+      <option value="rare">Rare</option>
+      <option value="ultra-rare">Ultra Rare</option>
+      <option value="legendary">Legendary</option>
+    </select>
+
+  </div>
+
+
+  <div class="category-bar" id="categoryBar">
+
+    <button class="active" data-category="all" onclick="setValueCategory('all')">
+      Tümü
+    </button>
+
+    <button data-category="pet" onclick="setValueCategory('pet')">
+      🐾 Pets
+    </button>
+
+    <button data-category="pet wear" onclick="setValueCategory('pet wear')">
+      👕 Pet Wear
+    </button>
+
+    <button data-category="egg" onclick="setValueCategory('egg')">
+      🥚 Eggs
+    </button>
+
+    <button data-category="vehicle" onclick="setValueCategory('vehicle')">
+      🚗 Vehicles
+    </button>
+
+    <button data-category="toy" onclick="setValueCategory('toy')">
+      🧸 Toys
+    </button>
+
+    <button data-category="stroller" onclick="setValueCategory('stroller')">
+      🛒 Strollers
+    </button>
+
+    <button data-category="food" onclick="setValueCategory('food')">
+      🍎 Food
+    </button>
+
+    <button data-category="gift" onclick="setValueCategory('gift')">
+      🎁 Gifts
+    </button>
+
+    <button data-category="sticker" onclick="setValueCategory('sticker')">
+      ⭐ Stickers
+    </button>
+
+    <button data-category="other" onclick="setValueCategory('other')">
+      📦 Other
     </button>
 
   </div>
 
-</section>
+
+  <div class="value-grid" id="valueGrid"></div>
 
 
-<!-- =========================================================
-     VALUES
-========================================================= -->
-
-<section class="values-section" id="values">
-
-  <div class="section-heading">
-
-    <div class="section-eyebrow">
-      PET VALUES
-    </div>
-
-    <h2>
-      Pet değerlerini keşfet.
-    </h2>
-
-    <p>
-      Pet adına göre arama yap ve değerini görüntüle.
-    </p>
-
-  </div>
-
-
-  <div class="values-panel">
-
-    <div class="values-search-wrap">
-
-      <span class="search-icon">
-        🔎
-      </span>
-
-      <input
-        id="search"
-        type="search"
-        placeholder="Pet ara..."
-        autocomplete="off"
-      >
-
-    </div>
-
-    <div
-      id="valuesGrid"
-      class="values-grid"
-    ></div>
-
-  </div>
-
-</section>
-
-
-<!-- =========================================================
-     ABOUT
-========================================================= -->
-
-<section class="about-section" id="about">
-
-  <div class="about-card">
-
-    <div class="about-icon">
-      ✦
-    </div>
-
-    <div class="about-content">
-
-      <div class="section-eyebrow">
-        ABOUT ZAYAXRA
-      </div>
-
-      <h2>
-        Daha kolay,
-        daha hızlı trade.
-      </h2>
-
-      <p>
-        ZAYAXRA, Adopt Me trade değerlerini karşılaştırmanı
-        kolaylaştırmak için hazırlanmış bir trade calculator
-        sistemidir.
-      </p>
-
-      <button
-        class="info-toggle"
-        type="button"
-        aria-expanded="false"
-        onclick="toggleZayaxraInfo()"
-      >
-        ZAYAXRA hakkında
-        <span>⌄</span>
-      </button>
-
-      <div
-        id="zayaxraInfoPanel"
-        class="zayaxra-info-panel"
-      >
-
-        <p>
-          Petlerini seç, Neon veya Mega durumunu belirle,
-          Fly/Ride seçeneklerini ekle ve iki teklif arasındaki
-          değer farkını görüntüle.
-        </p>
-
-      </div>
-
-    </div>
-
+  <div class="load-more-wrapper" id="loadMoreWrapper">
+    <button class="load-more-button" id="loadMoreBtn" onclick="loadMoreItems()" type="button">
+      Daha Fazla Göster
+    </button>
   </div>
 
 </section>
@@ -532,88 +465,20 @@
 </main>
 
 
-<!-- =========================================================
-     FOOTER
-========================================================= -->
+<!-- ================= PICKER ================= -->
 
-<footer class="footer">
+<div class="modal-overlay" id="petPickerModal">
 
-  <div class="footer-inner">
+  <div class="picker-modal">
 
-    <div class="footer-brand">
-
-      <div class="footer-logo">
-        <span class="logo-mark">Z</span>
-        ZAYAXRA
-      </div>
-
-      <p>
-        Adopt Me Trade Calculator
-      </p>
-
-    </div>
-
-    <div class="footer-links">
-
-      <a href="#calculator" data-scroll="calculator">
-        Calculator
-      </a>
-
-      <a href="#values" data-scroll="values">
-        Values
-      </a>
-
-      <a href="#about" data-scroll="about">
-        About
-      </a>
-
-      <a href="#" onclick="openInfo(event)">
-        Info
-      </a>
-
-    </div>
-
-  </div>
-
-  <div class="footer-bottom">
-    © 2026 ZAYAXRA. Fan-made project.
-  </div>
-
-</footer>
-
-
-<!-- =========================================================
-     PET PICKER MODAL
-========================================================= -->
-
-<div
-  id="petPicker"
-  class="modal-overlay pet-picker-modal"
-  aria-hidden="true"
->
-
-  <div class="pet-picker-card">
-
-    <div class="modal-header">
+    <div class="picker-header">
 
       <div>
-
-        <span class="modal-eyebrow">
-          ADD PET
-        </span>
-
-        <h2 id="petPickerTitle">
-          Teklifine pet ekle
-        </h2>
-
+        <span class="section-kicker">ITEM SELECTOR</span>
+        <h2 id="petPickerTitle">Item Seç</h2>
       </div>
 
-      <button
-        type="button"
-        class="modal-close"
-        onclick="closePetPicker()"
-        aria-label="Kapat"
-      >
+      <button class="modal-close" onclick="closePetPicker()" type="button">
         ×
       </button>
 
@@ -621,87 +486,122 @@
 
 
     <div class="picker-search">
-
       <span>🔎</span>
 
       <input
-        id="petSearch"
-        type="search"
-        placeholder="Pet ara..."
+        id="pickerSearch"
+        type="text"
+        placeholder="Pet veya eşya ara..."
         autocomplete="off"
       >
+    </div>
+
+
+    <div class="picker-category-bar" id="pickerCategoryBar">
+
+      <button class="active" data-category="all" onclick="setPickerCategory('all')">
+        Tümü
+      </button>
+
+      <button data-category="pet" onclick="setPickerCategory('pet')">
+        Pets
+      </button>
+
+      <button data-category="pet wear" onclick="setPickerCategory('pet wear')">
+        Pet Wear
+      </button>
+
+      <button data-category="egg" onclick="setPickerCategory('egg')">
+        Eggs
+      </button>
+
+      <button data-category="vehicle" onclick="setPickerCategory('vehicle')">
+        Vehicles
+      </button>
+
+      <button data-category="toy" onclick="setPickerCategory('toy')">
+        Toys
+      </button>
+
+      <button data-category="stroller" onclick="setPickerCategory('stroller')">
+        Strollers
+      </button>
+
+      <button data-category="food" onclick="setPickerCategory('food')">
+        Food
+      </button>
+
+      <button data-category="gift" onclick="setPickerCategory('gift')">
+        Gifts
+      </button>
+
+      <button data-category="sticker" onclick="setPickerCategory('sticker')">
+        Stickers
+      </button>
+
+      <button data-category="other" onclick="setPickerCategory('other')">
+        Other
+      </button>
 
     </div>
 
 
-    <div
-      id="pickerPets"
-      class="picker-pets"
-    >
+    <div class="picker-body">
 
-      <div class="empty-picker">
-        <span>⏳</span>
-        <strong>Petler yükleniyor...</strong>
-        <small>Lütfen bekle.</small>
-      </div>
-
-    </div>
+      <div class="picker-list" id="pickerPetList"></div>
 
 
-    <!-- =====================================================
-         PICKER BAR
-    ====================================================== -->
+      <aside class="picker-options">
 
-    <div
-      id="pickerBar"
-      class="picker-bar hidden"
-    >
+        <div class="picker-preview">
 
-      <div
-        id="pickerPreview"
-        class="picker-preview"
-      >
+          <div class="preview-image-wrap">
+            <img id="pickerPreview" src="" alt="">
+          </div>
 
-        <div class="picker-preview-empty">
-          Pet seç
+          <h3 id="pickerSelectedName">Item seç</h3>
+
+          <div class="selected-rarity" id="pickerSelectedRarity">
+            —
+          </div>
+
+          <div class="selected-value">
+            <span>VALUE</span>
+            <strong id="pickerValue">0</strong>
+          </div>
+
         </div>
 
-      </div>
 
+        <div class="option-group" id="formOptions">
 
-      <div class="picker-options">
-
-        <div class="option-group">
-
-          <span class="option-title">
-            FORM
-          </span>
+          <label>FORM</label>
 
           <div class="option-buttons">
 
             <button
-              id="normalFormBtn"
-              type="button"
-              class="option-btn active"
+              class="option-button active"
+              data-form="normal"
               onclick="toggleForm('normal')"
+              type="button"
             >
               Normal
             </button>
 
             <button
-              id="btnNeon"
-              type="button"
-              class="option-btn"
+              class="option-button"
+              data-form="neon"
               onclick="toggleForm('neon')"
+              type="button"
             >
               Neon
             </button>
 
             <button
-              id="btnMega"
-              type="button"
-              class="option-btn"
+              class="option-button"
+              data-form="mega"
               onclick="toggleForm('mega')"
+              type="button"
             >
               Mega
             </button>
@@ -711,78 +611,44 @@
         </div>
 
 
-        <div class="option-group">
+        <div class="option-group" id="potionOptions">
 
-          <span class="option-title">
-            POTION
-          </span>
+          <label>POTIONS</label>
 
           <div class="option-buttons">
 
             <button
-              id="noPotionBtn"
-              type="button"
-              class="option-btn active"
-              onclick="togglePotion('none')"
-            >
-              None
-            </button>
-
-            <button
-              id="btnFly"
-              type="button"
-              class="option-btn"
+              class="option-button"
+              data-potion="fly"
               onclick="togglePotion('fly')"
+              type="button"
             >
               Fly
             </button>
 
             <button
-              id="btnRide"
-              type="button"
-              class="option-btn"
+              class="option-button"
+              data-potion="ride"
               onclick="togglePotion('ride')"
+              type="button"
             >
               Ride
-            </button>
-
-            <button
-              id="flyRideBtn"
-              type="button"
-              class="option-btn"
-              onclick="togglePotion('flyride')"
-            >
-              F + R
             </button>
 
           </div>
 
         </div>
 
-      </div>
-
-
-      <div class="picker-confirm-row">
-
-        <div class="picker-total">
-
-          <span>TOTAL VALUE</span>
-
-          <strong id="pickerValue">
-            0
-          </strong>
-
-        </div>
 
         <button
-          type="button"
-          class="confirm-pet-btn"
+          class="confirm-item-button"
           onclick="confirmAddPet()"
+          type="button"
         >
-          ✓ Pet Ekle
+          ✓ Trade'e Ekle
         </button>
 
-      </div>
+      </aside>
 
     </div>
 
@@ -791,277 +657,141 @@
 </div>
 
 
-<!-- =========================================================
-     PROFILE MODAL
-========================================================= -->
+<!-- ================= PROFILE ================= -->
 
-<div
-  id="profileModal"
-  class="modal-overlay profile-modal"
-  aria-hidden="true"
->
+<div class="modal-overlay" id="profileModal">
 
-  <div class="profile-card">
+  <div class="profile-modal">
 
-    <div class="profile-top">
+    <button class="modal-close profile-close" onclick="closeProfile()" type="button">
+      ×
+    </button>
 
-      <button
-        type="button"
-        class="modal-close"
-        onclick="closeProfile()"
-      >
-        ×
-      </button>
+    <div id="profileView">
 
-      <div class="profile-avatar" id="profileAvatar">
-        🐉
-      </div>
+      <div class="profile-cover"></div>
 
-      <div class="profile-eyebrow">
-        PROFILE
-      </div>
+      <div class="profile-main">
 
-      <h2 id="profileName">
-        Zayaxra Kullanıcısı
-      </h2>
+        <div class="profile-avatar-large" id="profileAvatar">🐉</div>
 
-      <div
-        id="profileUsername"
-        class="profile-username"
-      >
-        @kullanici
-      </div>
+        <div class="profile-name-area">
+          <h2 id="profileName">ZAYAXRA Kullanıcısı</h2>
+          <span id="profileUsername">@kullanici</span>
+        </div>
 
-      <p id="profileBio">
-        Henüz bir biyografi eklenmedi.
-      </p>
-
-    </div>
-
-
-    <div class="profile-stats">
-
-      <div class="profile-stat">
-
-        <strong id="profileTrades">
-          0
-        </strong>
-
-        <span>Trades</span>
-
-      </div>
-
-      <div class="profile-stat">
-
-        <strong id="profileWins">
-          0
-        </strong>
-
-        <span>Wins</span>
-
-      </div>
-
-      <div class="profile-stat">
-
-        <strong id="profileFair">
-          0
-        </strong>
-
-        <span>Fair</span>
-
-      </div>
-
-      <div class="profile-stat">
-
-        <strong id="profileLoses">
-          0
-        </strong>
-
-        <span>Loses</span>
-
-      </div>
-
-    </div>
-
-
-    <div class="profile-actions">
-
-      <button
-        id="profileEditBtn"
-        type="button"
-        class="profile-edit-btn"
-        onclick="openEditProfile()"
-      >
-        ✏️ Profili Düzenle
-      </button>
-
-    </div>
-
-
-    <!-- =====================================================
-         EDIT PROFILE
-    ====================================================== -->
-
-    <form
-      id="profileEditForm"
-      class="profile-edit-form hidden"
-      onsubmit="saveEditedProfile(event)"
-    >
-
-      <label>
-        İsim
-
-        <input
-          id="editName"
-          type="text"
-          maxlength="30"
-          autocomplete="off"
-        >
-
-      </label>
-
-
-      <label>
-        Kullanıcı adı
-
-        <input
-          id="editUsername"
-          type="text"
-          maxlength="25"
-          autocomplete="off"
-        >
-
-      </label>
-
-
-      <label>
-        Biyografi
-
-        <textarea
-          id="editBio"
-          maxlength="120"
-          rows="3"
-        ></textarea>
-
-      </label>
-
-
-      <div class="avatar-section">
-
-        <span>
-          Avatar
-        </span>
-
-        <div
-          id="avatarPick"
-          class="avatar-pick"
-        ></div>
-
-      </div>
-
-
-      <div class="edit-buttons">
-
-        <button
-          type="button"
-          class="cancel-edit"
-          onclick="closeEditProfile()"
-        >
-          Vazgeç
+        <button id="profileEdit" onclick="openEditProfile()" type="button">
+          ✎ Düzenle
         </button>
 
-        <button
-          type="submit"
-          class="save-profile"
-        >
+      </div>
+
+
+      <div class="profile-stats">
+
+        <div>
+          <strong id="profileTrades">0</strong>
+          <span>Trades</span>
+        </div>
+
+        <div>
+          <strong id="profileWins">0</strong>
+          <span>Wins</span>
+        </div>
+
+        <div>
+          <strong id="profileFair">0</strong>
+          <span>Fair</span>
+        </div>
+
+        <div>
+          <strong id="profileLosses">0</strong>
+          <span>Losses</span>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div id="editProfile" class="edit-profile" style="display:none;">
+
+      <div class="edit-header">
+        <h2>Profili Düzenle</h2>
+        <p>Profil bilgilerini güncelle.</p>
+      </div>
+
+      <label>İsim</label>
+      <input id="editProfileName" type="text" maxlength="30">
+
+      <label>Kullanıcı adı</label>
+      <input id="editProfileUsername" type="text" maxlength="25">
+
+      <label>Avatar</label>
+
+      <div class="avatar-picker" id="avatarPicker">
+
+        <button onclick="selectAvatar('🐉')" type="button">🐉</button>
+        <button onclick="selectAvatar('🦇')" type="button">🦇</button>
+        <button onclick="selectAvatar('🦄')" type="button">🦄</button>
+        <button onclick="selectAvatar('🐢')" type="button">🐢</button>
+        <button onclick="selectAvatar('🐶')" type="button">🐶</button>
+        <button onclick="selectAvatar('🐱')" type="button">🐱</button>
+        <button onclick="selectAvatar('🦊')" type="button">🦊</button>
+        <button onclick="selectAvatar('🐼')" type="button">🐼</button>
+
+      </div>
+
+      <div class="edit-actions">
+
+        <button onclick="closeEditProfile()" class="secondary-button" type="button">
+          İptal
+        </button>
+
+        <button onclick="saveEditedProfile()" class="primary-button" type="button">
           Kaydet
         </button>
 
       </div>
 
-    </form>
+    </div>
 
   </div>
 
 </div>
 
 
-<!-- =========================================================
-     INFO MODAL
-========================================================= -->
+<!-- ================= TOAST ================= -->
 
-<div
-  id="infoModal"
-  class="modal-overlay info-modal"
-  aria-hidden="true"
->
+<div class="toast" id="toast">
 
-  <div class="info-modal-card">
-
-    <button
-      type="button"
-      class="modal-close"
-      onclick="closeInfo()"
-    >
-      ×
-    </button>
-
-    <div class="info-modal-icon">
-      ✦
-    </div>
-
-    <span class="modal-eyebrow">
-      ZAYAXRA
-    </span>
-
-    <h2>
-      Trade Calculator
-    </h2>
-
-    <p>
-      ZAYAXRA, Adopt Me trade değerlerini karşılaştırmaya
-      yardımcı olan fan-made bir projedir.
-    </p>
-
-    <div class="info-list">
-
-      <div>
-        <span>⚡</span>
-        Gerçek zamanlı trade hesaplama
-      </div>
-
-      <div>
-        <span>💎</span>
-        Pet ve egg değerleri
-      </div>
-
-      <div>
-        <span>🦋</span>
-        Neon / Mega desteği
-      </div>
-
-      <div>
-        <span>🏷️</span>
-        Fly / Ride desteği
-      </div>
-
-    </div>
-
-    <button
-      type="button"
-      class="primary-btn full-btn"
-      onclick="closeInfo()"
-    >
-      Anladım
-    </button>
-
-  </div>
+  <span id="toastIcon">✓</span>
+  <span id="toastText">Tamam</span>
 
 </div>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+  <div class="footer-logo">
+    <span>Z</span>
+    ZAYAXRA
+  </div>
+
+  <p>
+    Adopt Me fan-made trade value calculator.
+  </p>
+
+  <small>
+    © 2026 ZAYAXRA. Not affiliated with Roblox or Uplift Games.
+  </small>
+
+</footer>
 
 
 <script src="script.js"></script>
 
 </body>
 </html>
-```
